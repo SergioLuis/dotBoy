@@ -6,7 +6,7 @@ namespace SharpBoy.Interfaces
 {
     public interface IMemory
     {
-        byte this[int address] { get; set; }
+        byte this[short address] { get; set; }
         int Size { get; }
     }
 }

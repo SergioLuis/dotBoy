@@ -8,11 +8,16 @@ namespace SharpBoy.Core
 {
     public class Cpu : ICpu
     {
-        public Cpu(IClock clock, IMemory memory, IRegisters registers)
+        public Cpu(
+            IClock clock,
+            IMemory memory,
+            IRegisters registers,
+            IPipeline pipeline)
         {
             mClock = clock;
             mMemory = memory;
             mRegisters = registers;
+            mPipeline = pipeline;
         }
 
         public void StartSyncrhonousExecution()
@@ -30,28 +35,15 @@ namespace SharpBoy.Core
             while (true)
             {
                 mClock.WaitUntilNextCycle();
-                ExecuteNext();
+
+                byte instruction = mMemory[mRegisters.PC];
+                mPipeline.DecodeAndExecute(instruction, mRegisters, mMemory);
             }
-        }
-
-        void ExecuteNext()
-        {
-            // TODO read instruction using PC
-
-            // TODO decode instruction
-
-            // TODO execute instruction
-
-            // TODO update PC
-        }
-
-        void ICpu.StartExecution()
-        {
-            throw new NotImplementedException();
         }
 
         readonly IClock mClock;
         readonly IMemory mMemory;
         readonly IRegisters mRegisters;
+        readonly IPipeline mPipeline;
     }
 }

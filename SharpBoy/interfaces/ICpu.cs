@@ -6,6 +6,7 @@ namespace SharpBoy.Interfaces
 {
     public interface ICpu
     {
-        void StartExecution();
+        void StartSyncrhonousExecution();
+        void StartAsynchronousExecution();
     }
 }

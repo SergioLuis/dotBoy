@@ -27,20 +27,19 @@ namespace SharpBoy.Utils
             return true;
         }
 
-#warning Untested method
         public static string GetAsciiString(
             byte[] bytes, int offset, int count)
         {
-            StringBuilder sb = new StringBuilder();
-            for (int i = offset + count - 1; i >= offset; i--)
+            int validChars = 0;
+            for (int i = offset; i < offset + count; i++)
             {
-                if (bytes[i] != 0x00)
+                if (bytes[i] == 0x00)
                     break;
 
-                count--;
+                validChars++;
             }
 
-            return Encoding.ASCII.GetString(bytes, offset, count);
+            return Encoding.ASCII.GetString(bytes, offset, validChars);
         }
     }
 }

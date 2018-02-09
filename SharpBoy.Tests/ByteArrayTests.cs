@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 using SharpBoy.Utils;
@@ -10,13 +9,20 @@ namespace SharpBoy.Tests
         [Fact]
         public void EqualsTest()
         {
-            // Same byte array
+            byte[] left = { 183, 14, 158, 69, 123, 94, 115, 220 };
+            byte[] right = { 32, 158, 69, 123, 94, 57, 227, 220 };
 
-            // Byte array with slice equals
+            Assert.True(
+                ByteArray.Equals(left, 0, left, 0, left.Length));
 
-            // Byte array with slice not equals
+            Assert.True(
+                ByteArray.Equals(left, 2, right, 1, 4));
 
-            // Byte array with slice does not match
+            Assert.False(
+                ByteArray.Equals(left, 2, right, 1, 5));
+
+            Assert.False(
+                ByteArray.Equals(left, 7, right, 7, 2));
         }
 
         [Fact]

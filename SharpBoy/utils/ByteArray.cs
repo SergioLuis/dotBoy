@@ -4,7 +4,6 @@ namespace SharpBoy.Utils
 {
     public class ByteArray
     {
-#warning Untested method
         public static bool Equals(
             byte[] left,
             int leftOffset,

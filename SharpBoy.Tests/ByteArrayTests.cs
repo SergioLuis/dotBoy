@@ -13,7 +13,7 @@ namespace SharpBoy.Tests
             byte[] right = { 32, 158, 69, 123, 94, 57, 227, 220 };
 
             Assert.True(
-                ByteArray.Equals(left, 0, left, 0, left.Length));
+                ByteArray.Equals(left, 0, left, 0, (uint)left.Length));
 
             Assert.True(
                 ByteArray.Equals(left, 2, right, 1, 4));

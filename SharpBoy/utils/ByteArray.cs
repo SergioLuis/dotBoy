@@ -6,20 +6,20 @@ namespace SharpBoy.Utils
     {
         public static bool Equals(
             byte[] left,
-            int leftOffset,
+            uint leftIndex,
             byte[] right,
-            int rightOffset,
-            int count)
+            uint rightIndex,
+            uint length)
         {
-            if (leftOffset + count > left.Length)
+            if (leftIndex + length > left.Length)
                 return false;
 
-            if (rightOffset + count > right.Length)
+            if (rightIndex + length > right.Length)
                 return false;
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < length; i++)
             {
-                if (left[leftOffset + i] != right[rightOffset + i])
+                if (left[leftIndex + i] != right[rightIndex + i])
                     return false;
             }
 
@@ -27,10 +27,10 @@ namespace SharpBoy.Utils
         }
 
         public static string GetAsciiString(
-            byte[] bytes, int offset, int count)
+            byte[] bytes, int index, int length)
         {
             int validChars = 0;
-            for (int i = offset; i < offset + count; i++)
+            for (int i = index; i < index + length; i++)
             {
                 if (bytes[i] == 0x00)
                     break;
@@ -38,7 +38,7 @@ namespace SharpBoy.Utils
                 validChars++;
             }
 
-            return Encoding.ASCII.GetString(bytes, offset, validChars);
+            return Encoding.ASCII.GetString(bytes, index, validChars);
         }
     }
 }

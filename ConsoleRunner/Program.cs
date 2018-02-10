@@ -16,6 +16,7 @@ namespace ConsoleRunner
 
             Rom rom = RomLoader.Load(args[0], failIfCorrupted: false);
             PrintRomInformation(rom.Information);
+            Emulator.Init(rom);
         }
 
         static void PrintRomInformation(Rom.RomInformation information)

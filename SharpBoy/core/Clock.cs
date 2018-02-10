@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using SharpBoy.Interfaces;
+﻿using SharpBoy.Interfaces;
 
 namespace SharpBoy.Core
 {
@@ -10,7 +6,7 @@ namespace SharpBoy.Core
     {
         void IClock.WaitUntilNextCycle()
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }

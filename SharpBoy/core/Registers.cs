@@ -1,31 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using SharpBoy.Interfaces;
+﻿using SharpBoy.Interfaces;
 
 namespace SharpBoy.Core
 {
     public class Registers : IRegisters
     {
-        byte IRegisters.A { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        byte IRegisters.F { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        byte IRegisters.B { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        byte IRegisters.C { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        byte IRegisters.A { get; set; }
+        byte IRegisters.F { get; set; }
 
-        byte[] IRegisters.BC => throw new NotImplementedException();
+        byte IRegisters.B { get => mBC[0]; set => mBC[0] = value; }
+        byte IRegisters.C { get => mBC[1]; set => mBC[1] = value; }
 
-        byte IRegisters.D { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        byte IRegisters.E { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        byte[] IRegisters.BC => mBC;
 
-        byte[] IRegisters.DE => throw new NotImplementedException();
+        byte IRegisters.D { get => mDE[0]; set => mDE[0] = value; }
+        byte IRegisters.E { get => mDE[1]; set => mDE[1] = value; }
 
-        byte IRegisters.H { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        byte IRegisters.L { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        byte[] IRegisters.DE => mDE;
 
-        byte IRegisters.HL => throw new NotImplementedException();
+        byte IRegisters.H { get => mHL[0]; set => mHL[0] = value; }
+        byte IRegisters.L { get => mHL[1]; set => mHL[1] = value; }
 
-        ushort IRegisters.SP { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        ushort IRegisters.PC { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        byte[] IRegisters.HL => mHL;
+
+        ushort IRegisters.SP { get; set; }
+        ushort IRegisters.PC { get { return mPC; } set { mPC = value; } }
+
+        byte[] mBC = new byte[2];
+        byte[] mDE = new byte[2];
+        byte[] mHL = new byte[2];
+
+        ushort mPC;
     }
 }

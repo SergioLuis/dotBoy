@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 using SharpBoy.Interfaces;
 
@@ -20,9 +18,9 @@ namespace SharpBoy.Core
             mPipeline = pipeline;
         }
 
-        public void StartSyncrhonousExecution()
+        public void StartSynchronousExecution()
         {
-
+            ExecuteInLoop();
         }
 
         public void StartAsynchronousExecution()

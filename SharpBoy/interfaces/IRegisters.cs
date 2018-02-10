@@ -19,7 +19,7 @@ namespace SharpBoy.Interfaces
 
         byte H { get; set; }
         byte L { get; set; }
-        byte HL { get; }
+        byte[] HL { get; }
 
         ushort SP { get; set; }
         ushort PC { get; set; }

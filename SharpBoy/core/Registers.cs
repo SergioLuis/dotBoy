@@ -25,7 +25,7 @@ namespace SharpBoy.Core
 
         byte IRegisters.HL => throw new NotImplementedException();
 
-        short IRegisters.SP { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        short IRegisters.PC { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        ushort IRegisters.SP { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        ushort IRegisters.PC { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

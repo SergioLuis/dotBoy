@@ -21,7 +21,7 @@ namespace SharpBoy.Interfaces
         byte L { get; set; }
         byte HL { get; }
 
-        short SP { get; set; }
-        short PC { get; set; }
+        ushort SP { get; set; }
+        ushort PC { get; set; }
     }
 }

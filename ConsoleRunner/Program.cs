@@ -54,7 +54,7 @@ namespace ConsoleRunner
                 $"Destination code: {information.DestinationCode}");
 
             Console.WriteLine(
-                $"License code: {information.LicenseCode}");
+                $"Licensee code: {information.LicenseeCode}");
 
             Console.WriteLine(
                 $"Mask ROM Version number: {information.MaskRomVersionNumber}");

@@ -88,11 +88,66 @@ namespace SharpBoy
                 _64KB = 0x05   // 8 banks of 8KBytes each
             }
 
-            public enum LicenseCodeId : byte
+            public enum LicenseeCodeId : byte
             {
-                CheckElsewhere = 0x33,
-                Accolae = 0x79,
-                Konami = 0xA4
+                None = 0x00,
+                NintendoRandD1 = 0x01,
+                Capcom = 0x08,
+                ElectronicArts_A = 0x13,
+                HudsonSoft = 0x18,
+                b_ai = 0x19,
+                kss = 0x20,
+                pow = 0x22,
+                PCMComplete = 0x24,
+                san_x = 0x25,
+                KemcoJapan = 0x28,
+                seta = 0x29,
+                Viacom = 0x30,
+                Nintendo = 0x31,
+                Bandai = 0x32,
+                Ocean_Acclaim_A = 0x33,
+                Konami_A = 0x34,
+                Hector = 0x35,
+                Taito = 0x37,
+                Hudson = 0x38,
+                Banpresto = 0x39,
+                UbiSoft = 0x41,
+                Atlus = 0x42,
+                Malibu = 0x44,
+                angel = 0x46,
+                Bullet_Proof = 0x47,
+                irem = 0x49,
+                Absolute = 0x50,
+                Acclaim = 0x51,
+                Activision = 0x52,
+                AmericanSammy = 0x53,
+                Konami_B = 0x54,
+                Hi_tech_entertainment = 0x55,
+                LJN = 0x56,
+                Matchbox = 0x57,
+                Mattel = 0x58,
+                MiltonBradley = 0x59,
+                Titus = 0x60,
+                ElectronicArts_B = 0x69,
+                Infogrames = 0x70,
+                Interplay = 0x71,
+                Broderbund = 0x72,
+                sculptured = 0x73,
+                sci = 0x75,
+                THQ = 0x78,
+                Accolade = 0x79,
+                misawa = 0x80,
+                lozc = 0x83,
+                tokuma_shoten_i = 0x86,
+                tsukuda_ori = 0x87,
+                Chunsoft = 0x91,
+                Video_system = 0x92,
+                Ocean_Acclaim_2 = 0x93,
+                Varie = 0x95,
+                Yonezawas_pal = 0x96,
+                Kaneko = 0x97,
+                Pack_in_soft = 0x99,
+                Konami_YuGiOh = 0xA4
             }
 
             public bool IsLogoIntegrityCorrect { get; private set; }
@@ -109,7 +164,7 @@ namespace SharpBoy
             public RomSizeId RomSize { get; private set; }
             public RamSizeId RamSize { get; private set; }
             public DestinationCodeId DestinationCode { get; private set; }
-            public LicenseCodeId LicenseCode { get; private set; }
+            public LicenseeCodeId LicenseeCode { get; private set; }
 
             public byte MaskRomVersionNumber { get; private set; }
             public byte ComplementCheck { get; private set; }
@@ -150,7 +205,7 @@ namespace SharpBoy
                 RomSizeId romSize = (RomSizeId)romContent[0x0148];
                 RamSizeId ramSize = (RamSizeId)romContent[0x0149];
                 DestinationCodeId destinationCode = (DestinationCodeId)romContent[0x014A];
-                LicenseCodeId licenseCode = (LicenseCodeId)romContent[0x014B];
+                LicenseeCodeId licenseeCode = (LicenseeCodeId)romContent[0x014B];
 
                 byte maskRomVersionNumber = romContent[0x014C];
                 byte complementCheck = romContent[0x014D];
@@ -169,7 +224,7 @@ namespace SharpBoy
                     RomSize = romSize,
                     RamSize = ramSize,
                     DestinationCode = destinationCode,
-                    LicenseCode = licenseCode,
+                    LicenseeCode = licenseeCode,
                     MaskRomVersionNumber = maskRomVersionNumber,
                     ComplementCheck = complementCheck,
                     Checksum = checksum

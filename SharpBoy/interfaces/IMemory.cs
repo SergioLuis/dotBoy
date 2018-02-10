@@ -6,7 +6,13 @@ namespace SharpBoy.Interfaces
 {
     public interface IMemory
     {
-        byte this[short address] { get; set; }
+        byte this[ushort address] { get; set; }
         int Size { get; }
+
+        void BlockLoad(
+            byte[] source,
+            uint sourceIndex,
+            uint destinationIndex,
+            uint length);
     }
 }

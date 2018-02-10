@@ -36,10 +36,10 @@ namespace ConsoleRunner
                 $"Game title: {information.GameTitle}");
 
             Console.WriteLine(
-                $"License code (HN): {information.LicenseCodeHighNibble}");
+                $"Licensee (Old code): {information.OldLicensee}");
 
             Console.WriteLine(
-                $"License code (LN): {information.LicenseCodeLowNibble}");
+                $"Licensee (New code): {information.Licensee}");
 
             Console.WriteLine(
                 $"Cartridge type: {information.Type}");
@@ -52,9 +52,6 @@ namespace ConsoleRunner
 
             Console.WriteLine(
                 $"Destination code: {information.DestinationCode}");
-
-            Console.WriteLine(
-                $"Licensee code: {information.LicenseeCode}");
 
             Console.WriteLine(
                 $"Mask ROM Version number: {information.MaskRomVersionNumber}");

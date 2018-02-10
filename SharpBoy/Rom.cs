@@ -69,8 +69,10 @@ namespace SharpBoy
                 _128KB = 0x02,
                 _256KB = 0x03,
                 _512KB = 0x04,
-                _1MB = 0x05,
-                _2MB = 0x06,
+                _1MB = 0x05,   // only 63 banks used by MBC1
+                _2MB = 0x06,   // only 125 banks used by MBC1
+                _4MB = 0x07,
+                _8MB = 0x08,
                 _1p1MB = 0x52,
                 _1p2MB = 0x53,
                 _1p5MB = 0x54

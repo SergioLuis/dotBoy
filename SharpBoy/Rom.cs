@@ -81,8 +81,9 @@ namespace SharpBoy
                 None = 0x00,
                 _2KB = 0x01,
                 _8KB = 0x02,
-                _32KB = 0x03,
-                _128KB = 0x04
+                _32KB = 0x03,  // 4 banks of 8KBytes each
+                _128KB = 0x04, // 16 banks of 8KBytes each
+                _64KB = 0x05   // 8 banks of 8KBytes each
             }
 
             public enum LicenseCodeId : byte

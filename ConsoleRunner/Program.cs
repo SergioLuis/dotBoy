@@ -21,13 +21,13 @@ namespace ConsoleRunner
         static void PrintRomInformation(Rom.RomInformation information)
         {
             Console.WriteLine(
-                $"Logo integrity checked: {information.LogoIntegrityChecked}");
+                $"Logo integrity correct: {information.IsLogoIntegrityCorrect}");
 
             Console.WriteLine(
-                $"Complement byte checked: {information.ComplementByteChecked}");
+                $"Header checksum correct: {information.IsHeaderChecksumCorrect}");
 
             Console.WriteLine(
-                $"Checksum checked: {information.ChecksumChecked}");
+                $"Cartridge checksum correct: {information.IsCartridgeChecksumCorrect}");
 
             Console.WriteLine(
                 $"Platform: {information.Platform}");

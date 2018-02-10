@@ -92,9 +92,9 @@ namespace SharpBoy
                 Konami = 0xA4
             }
 
-            public bool LogoIntegrityChecked { get; private set; }
-            public bool ComplementByteChecked { get; private set; }
-            public bool ChecksumChecked { get; private set; }
+            public bool IsLogoIntegrityCorrect { get; private set; }
+            public bool IsHeaderChecksumCorrect { get; private set; }
+            public bool IsCartridgeChecksumCorrect { get; private set; }
 
             public PlatformId Platform { get; private set; }
             public string GameTitle { get; private set; }
@@ -114,22 +114,25 @@ namespace SharpBoy
 
             public bool IntegrityCheckPassed
             {
-                get => LogoIntegrityChecked
-                      && ComplementByteChecked
-                      && ChecksumChecked;
+                get => IsLogoIntegrityCorrect
+                      && IsHeaderChecksumCorrect
+                      && IsCartridgeChecksumCorrect;
             }
 
             public static RomInformation Initialize(byte[] romContent)
             {
-                bool logoIntegrityChecked = ByteArray.Equals(
+                bool isLogoIntegrityCorrect = ByteArray.Equals(
                     romContent,
                     0x0104,
                     NINTENDO_LOGO,
                     0,
                     0x0133 - 0x0104 + 1);
 
-                // TODO ComplementCheck
-                // TODO Checksum
+                bool isHeaderChecksumCorrect =
+                    CheckHeaderChecksum(romContent, 0x014D);
+
+                bool isCartridgeChecksumCorrect =
+                    CheckCartridgeChecksum(romContent, 0x014E, 0x014F);
 
                 PlatformId platform = CalculatePlatform(
                     romContent[0x0146], romContent[0x0143]);
@@ -152,7 +155,9 @@ namespace SharpBoy
 
                 return new RomInformation()
                 {
-                    LogoIntegrityChecked = logoIntegrityChecked,
+                    IsLogoIntegrityCorrect = isLogoIntegrityCorrect,
+                    IsHeaderChecksumCorrect = isHeaderChecksumCorrect,
+                    IsCartridgeChecksumCorrect = isCartridgeChecksumCorrect,
                     Platform = platform,
                     GameTitle = gameTitle,
                     LicenseCodeHighNibble = licenseCodeHighNibble,
@@ -179,6 +184,37 @@ namespace SharpBoy
                     return PlatformId.GameBoy;
 
                 return PlatformId.GameBoyColor;
+            }
+
+#warning untested method
+            static bool CheckCartridgeChecksum(
+                byte[] romContent,
+                ushort hChecksumAddress,
+                ushort lChecksumAddress)
+            {
+                uint checksum = CartridgeChecksum.CalculateChecksum(
+                    romContent,
+                    0,
+                    romContent.Length,
+                    hChecksumAddress,
+                    lChecksumAddress);
+
+                byte[] checksumBytes = BitConverter.GetBytes(checksum);
+                return checksumBytes[3] == romContent[hChecksumAddress]
+                    && checksumBytes[2] == romContent[lChecksumAddress];
+            }
+
+#warning untested method
+            static bool CheckHeaderChecksum(
+                byte[] romContent, ushort checksumAddress)
+            {
+                int checksum = CartridgeChecksum.CalculateHeaderChecksum(
+                    romContent,
+                    0x0134,
+                    0x014C - 0x0134 + 1);
+
+                byte[] checksumBytes = BitConverter.GetBytes(checksum);
+                return checksumBytes[0] == romContent[checksumAddress];
             }
 
             static readonly byte[] NINTENDO_LOGO =

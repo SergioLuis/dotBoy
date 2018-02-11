@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NLog" Version="4.5.0-rc04" />
+    <PackageReference Include="NLog.Config" Version="4.5.0-rc04" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SharpBoy\SharpBoy.csproj" />
   </ItemGroup>
 

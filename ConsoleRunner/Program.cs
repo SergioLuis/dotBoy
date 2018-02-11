@@ -1,5 +1,9 @@
 ﻿using System;
 
+using NLog;
+using NLog.Targets;
+using NLog.Config;
+
 using SharpBoy;
 
 namespace ConsoleRunner
@@ -14,9 +18,37 @@ namespace ConsoleRunner
                 Environment.Exit(1);
             }
 
+            ConfigureLogging();
+
             Rom rom = RomLoader.Load(args[0], failIfCorrupted: false);
             PrintRomInformation(rom.Information);
             Emulator.Init(rom);
+        }
+
+        static void ConfigureLogging()
+        {
+            var config = new LoggingConfiguration();
+
+            var consoleTarget = new ColoredConsoleTarget();
+            consoleTarget.Layout = NLOG_LAYOUT;
+
+            var fileTarget = new FileTarget();
+            fileTarget.Layout = NLOG_LAYOUT;
+            fileTarget.FileName = NLOG_FILE;
+            fileTarget.KeepFileOpen = true;
+
+            var consoleLoggingRule =
+                new LoggingRule("*", LogLevel.Trace, consoleTarget);
+            var fileLoggingRule =
+                new LoggingRule("*", LogLevel.Trace, fileTarget);
+
+            config.AddTarget("console", consoleTarget);
+            config.AddTarget("file", fileTarget);
+
+            config.LoggingRules.Add(consoleLoggingRule);
+            config.LoggingRules.Add(fileLoggingRule);
+
+            LogManager.Configuration = config;
         }
 
         static void PrintRomInformation(Rom.RomInformation information)
@@ -66,5 +98,8 @@ namespace ConsoleRunner
     }
 
         const string USAGE = "Usage: ConsoleRunner.exe <Rom path>";
+
+        const string NLOG_LAYOUT = @"${date:format=HH\:mm\:ss} ${logger} - ${message}";
+        const string NLOG_FILE = "${basedir}/sharpboy.log.txt";
     }
 }

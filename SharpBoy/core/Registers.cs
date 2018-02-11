@@ -1,4 +1,5 @@
-﻿using SharpBoy.Interfaces;
+﻿using NLog;
+using SharpBoy.Interfaces;
 
 namespace SharpBoy.Core
 {
@@ -30,5 +31,7 @@ namespace SharpBoy.Core
         byte[] mHL = new byte[2];
 
         ushort mPC;
+
+        static readonly Logger mLog = LogManager.GetLogger("Registers");
     }
 }

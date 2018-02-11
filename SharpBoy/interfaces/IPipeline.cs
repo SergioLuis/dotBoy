@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SharpBoy.Interfaces
+﻿namespace SharpBoy.Interfaces
 {
     public interface IPipeline
     {

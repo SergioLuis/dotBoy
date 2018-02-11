@@ -1,6 +1,7 @@
 ﻿using System;
 
 using SharpBoy.Core;
+using SharpBoy.Core.Logging;
 using SharpBoy.Interfaces;
 
 namespace SharpBoy
@@ -16,7 +17,7 @@ namespace SharpBoy
             }
 
             IClock clock = new Clock();
-            IMemory memory = new Memory();
+            IMemory memory = new LoggedMemory(new Memory());
             IRegisters registers = new Registers();
             IPipeline pipeline = new Pipeline();
 

@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
+using NLog;
+
+using SharpBoy.Core.Instructions;
 using SharpBoy.Interfaces;
 
 namespace SharpBoy.Core
@@ -11,7 +12,30 @@ namespace SharpBoy.Core
         void IPipeline.DecodeAndExecute(
             byte instruction, IRegisters registers, IMemory memory)
         {
-            throw new NotImplementedException();
+            mLog.Info(
+                "Decoding and executing: {0:D8}",
+                Convert.ToString(instruction, 2));
+
+            switch (instruction)
+            {
+                case 0x00:
+                    NopInstr.ExecuteNop(registers);
+                    return;
+
+                //case 0xAF:
+                //    LoadInstr.Execute_Ld_r_r(instruction, registers);
+                //    return;
+
+                case 0xC3:
+                    JumpInstr.Execute_Jp_nn(registers, memory);
+                    return;
+
+                default:
+                    mLog.Error("Instruction not implemented.");
+                    throw new NotImplementedException();
+            }
         }
+
+        static readonly Logger mLog = LogManager.GetLogger("Pipeline");
     }
 }

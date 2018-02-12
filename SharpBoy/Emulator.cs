@@ -18,7 +18,7 @@ namespace SharpBoy
 
             IClock clock = new Clock();
             IMemory memory = new LoggedMemory(new Memory());
-            IRegisters registers = new Registers();
+            IRegisters registers = new LoggedRegisters(new Registers());
             IPipeline pipeline = new Pipeline();
 
             memory.BlockLoad(

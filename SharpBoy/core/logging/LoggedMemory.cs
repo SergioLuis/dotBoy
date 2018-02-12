@@ -21,12 +21,12 @@ namespace SharpBoy.Core.Logging
             get
             {
                 byte result = mInternal[address];
-                mLog.Trace("Read [0x{0:X2}] -> 0x{1:X2}", address, result);
+                mLog.Trace("Read [0x{0:X4}] -> 0x{1:X2}", address, result);
                 return result;
             }
             set
             {
-                mLog.Trace("Write [0x{0:X2}] <- 0x{1:X2}", address, value);
+                mLog.Trace("Write [0x{0:X4}] <- 0x{1:X2}", address, value);
                 mInternal[address] = value;
             }
         }
@@ -43,7 +43,7 @@ namespace SharpBoy.Core.Logging
             uint length)
         {
             mLog.Trace(
-                "BlockLoad: srcIndex: {0} | dstIndex: {0} | length: {0}",
+                "BlockLoad: srcIndex: 0x{0:X4} | dstIndex: 0x{1:X4} | length: {2}B",
                 sourceIndex,
                 destinationIndex,
                 length);

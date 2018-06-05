@@ -4,7 +4,7 @@ using NLog;
 using NLog.Targets;
 using NLog.Config;
 
-using SharpBoy;
+using DotBoy;
 
 namespace ConsoleRunner
 {
@@ -93,13 +93,12 @@ namespace ConsoleRunner
                 $"Complement check: {information.ComplementCheck}");
 
             Console.WriteLine(
-                $"Checksum: {information.Checksum}"
-                );
+                $"Checksum: {information.Checksum}");
     }
 
         const string USAGE = "Usage: ConsoleRunner.exe <Rom path>";
 
         const string NLOG_LAYOUT = @"${date:format=HH\:mm\:ss} ${logger} - ${message}";
-        const string NLOG_FILE = "${basedir}/sharpboy.log.txt";
+        const string NLOG_FILE = "${basedir}/dotboy.log.txt";
     }
 }

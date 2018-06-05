@@ -6,9 +6,9 @@ using DotBoy.Interfaces;
 
 namespace DotBoy
 {
-    public static class Emulator
+    public class Emulator
     {
-        public static void Init(Rom rom)
+        public static Emulator Init(Rom rom, ISleeper sleeper)
         {
             if (rom.Information.Type != CartridgeTypeId.RomOnly)
             {
@@ -16,7 +16,11 @@ namespace DotBoy
                 Environment.Exit(1);
             }
 
-            IClock clock = new Clock();
+            var clock = new Clock();
+            var chronometer = new Chronometer(clock);
+            IClockDivider cpuClockDivider =
+                ClockDivider.FromMillisPerStep(chronometer, 0);
+
             IMemory memory = new LoggedMemory(new Memory());
             IRegisters registers = new LoggedRegisters(new Registers());
             IPipeline pipeline = new Pipeline();
@@ -29,17 +33,51 @@ namespace DotBoy
 
             registers.PC = 0x0100;
 
-            ICpu cpu = new Cpu(clock, memory, registers, pipeline);
+            var cpu = new Cpu(memory, registers, pipeline);
 
-            try
+            cpuClockDivider.AddObserver(cpu);
+
+            return new Emulator(sleeper, chronometer, cpuClockDivider);
+        }
+
+        Emulator(
+            ISleeper sleeper,
+            IChronometer chronometer,
+            params IClockDivider[] clockDividers)
+        {
+            mSleeper = sleeper;
+            mChronometer = chronometer;
+            mClockDividers = clockDividers;
+        }
+
+        public void Run()
+        {
+            mChronometer.Start();
+
+            while (mChronometer.IsRunning)
             {
-                cpu.StartSynchronousExecution();
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine(ex.Message);
-                Environment.Exit(1);
+                mChronometer.Update();
+
+                long minMsLeft = long.MaxValue;
+                foreach (var clockDivider in mClockDividers)
+                {
+                    clockDivider.Trigger();
+
+                    if (clockDivider.MsLeft < minMsLeft)
+                        minMsLeft = clockDivider.MsLeft;
+                }
+
+                mSleeper.Sleep(Math.Max(0, minMsLeft));
             }
         }
+
+        public void Pause()
+        {
+            mChronometer.Stop();
+        }
+
+        readonly ISleeper mSleeper;
+        readonly IChronometer mChronometer;
+        readonly IClockDivider[] mClockDividers;
     }
 }

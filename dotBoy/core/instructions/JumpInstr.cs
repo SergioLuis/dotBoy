@@ -8,6 +8,7 @@ namespace DotBoy.Core.Instructions
 {
     public static class JumpInstr
     {
+#warning Untested instruction
         public static void Execute_Jp_nn(IRegisters registers, IMemory memory)
         {
             mLog.Info("JP nn");

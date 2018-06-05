@@ -22,7 +22,9 @@ namespace ConsoleRunner
 
             Rom rom = RomLoader.Load(args[0], failIfCorrupted: false);
             PrintRomInformation(rom.Information);
-            Emulator.Init(rom);
+
+            var emulator = Emulator.Init(rom, new RealTimeSleeper());
+            emulator.Run();
         }
 
         static void ConfigureLogging()
@@ -94,7 +96,7 @@ namespace ConsoleRunner
 
             Console.WriteLine(
                 $"Checksum: {information.Checksum}");
-    }
+        }
 
         const string USAGE = "Usage: ConsoleRunner.exe <Rom path>";
 

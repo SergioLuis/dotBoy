@@ -6,7 +6,7 @@ namespace DotBoy.Core.Instructions
 {
     public static class NopInstr
     {
-#warning untested method
+#warning Untested instruction
         public static void ExecuteNop(IRegisters registers)
         {
             mLog.Info("NOP");

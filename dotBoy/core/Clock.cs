@@ -1,12 +1,19 @@
-﻿using DotBoy.Interfaces;
+﻿using System;
+
+using DotBoy.Interfaces;
 
 namespace DotBoy.Core
 {
     public class Clock : IClock
     {
-        void IClock.WaitUntilNextCycle()
+        long IClock.Millis => mMillis;
+
+        IClock IClock.Update()
         {
-            return;
+            mMillis = DateTime.UtcNow.Ticks;
+            return this;
         }
+
+        long mMillis;
     }
 }

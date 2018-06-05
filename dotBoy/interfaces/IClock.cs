@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DotBoy.Interfaces
+﻿namespace DotBoy.Interfaces
 {
     public interface IClock
     {
-        void WaitUntilNextCycle();
+        long Millis { get; }
+
+        IClock Update();
     }
 }

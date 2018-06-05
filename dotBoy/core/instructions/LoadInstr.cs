@@ -8,7 +8,7 @@ namespace DotBoy.Core.Instructions
 {
     public static class LoadInstr
     {
-#warning Untested method
+#warning Untested instruction
         public static void Execute_Ld_r_r(byte instruction, IRegisters registers)
         {
             mLog.Info("LD r,r'");

@@ -1,4 +1,4 @@
-﻿namespace SharpBoy.Interfaces
+﻿namespace DotBoy.Interfaces
 {
     public interface IPipeline
     {

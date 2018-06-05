@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharpBoy.Interfaces
+namespace DotBoy.Interfaces
 {
     public interface IClock
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 
-using SharpBoy.Core;
-using SharpBoy.Core.Logging;
-using SharpBoy.Interfaces;
+using DotBoy.Core;
+using DotBoy.Core.Logging;
+using DotBoy.Interfaces;
 
-namespace SharpBoy
+namespace DotBoy
 {
     public static class Emulator
     {

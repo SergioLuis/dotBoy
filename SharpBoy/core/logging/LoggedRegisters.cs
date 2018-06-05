@@ -2,9 +2,9 @@
 
 using NLog;
 
-using SharpBoy.Interfaces;
+using DotBoy.Interfaces;
 
-namespace SharpBoy.Core.Logging
+namespace DotBoy.Core.Logging
 {
     public class LoggedRegisters : IRegisters
     {

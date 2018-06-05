@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 
-using SharpBoy.Utils;
+using DotBoy.Utils;
 
-namespace SharpBoy
+namespace DotBoy
 {
     public enum PlatformId : byte
     {

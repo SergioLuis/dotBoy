@@ -2,10 +2,10 @@
 
 using NLog;
 
-using SharpBoy.Core.Instructions;
-using SharpBoy.Interfaces;
+using DotBoy.Core.Instructions;
+using DotBoy.Interfaces;
 
-namespace SharpBoy.Core
+namespace DotBoy.Core
 {
     public class Pipeline : IPipeline
     {

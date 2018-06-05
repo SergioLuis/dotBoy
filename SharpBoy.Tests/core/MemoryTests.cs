@@ -2,10 +2,10 @@
 
 using Xunit;
 
-using SharpBoy.Core;
-using SharpBoy.Interfaces;
+using DotBoy.Core;
+using DotBoy.Interfaces;
 
-namespace SharpBoy.Tests.Core
+namespace DotBoy.Tests.Core
 {
     public class MemoryTests
     {

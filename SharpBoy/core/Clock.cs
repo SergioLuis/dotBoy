@@ -1,6 +1,6 @@
-﻿using SharpBoy.Interfaces;
+﻿using DotBoy.Interfaces;
 
-namespace SharpBoy.Core
+namespace DotBoy.Core
 {
     public class Clock : IClock
     {

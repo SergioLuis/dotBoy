@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace SharpBoy.Utils
+namespace DotBoy.Utils
 {
     public class ByteArray
     {

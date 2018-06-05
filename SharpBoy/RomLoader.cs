@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SharpBoy
+namespace DotBoy
 {
     public class RomLoader
     {

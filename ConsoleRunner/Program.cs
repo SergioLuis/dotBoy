@@ -4,7 +4,7 @@ using NLog;
 using NLog.Targets;
 using NLog.Config;
 
-using SharpBoy;
+using DotBoy;
 
 namespace ConsoleRunner
 {

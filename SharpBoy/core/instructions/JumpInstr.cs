@@ -2,9 +2,9 @@
 
 using NLog;
 
-using SharpBoy.Interfaces;
+using DotBoy.Interfaces;
 
-namespace SharpBoy.Core.Instructions
+namespace DotBoy.Core.Instructions
 {
     public static class JumpInstr
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SharpBoy.Utils
+namespace DotBoy.Utils
 {
     public class StringValue : Attribute
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 
-using SharpBoy.Utils;
+using DotBoy.Utils;
 
-namespace SharpBoy
+namespace DotBoy
 {
     public class Rom
     {

@@ -1,8 +1,8 @@
 using Xunit;
 
-using SharpBoy.Utils;
+using DotBoy.Utils;
 
-namespace SharpBoy.Tests
+namespace DotBoy.Tests
 {
     public class ByteArrayTests
     {

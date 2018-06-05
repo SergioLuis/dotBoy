@@ -11,15 +11,15 @@ namespace DotBoy.Interfaces
 
         byte B { get; set; }
         byte C { get; set; }
-        byte[] BC { get; }
+        ushort BC { get; }
 
         byte D { get; set; }
         byte E { get; set; }
-        byte[] DE { get; }
+        ushort DE { get; }
 
         byte H { get; set; }
         byte L { get; set; }
-        byte[] HL { get; }
+        ushort HL { get; }
 
         ushort SP { get; set; }
         ushort PC { get; set; }

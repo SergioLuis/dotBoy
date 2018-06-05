@@ -5,33 +5,25 @@ namespace DotBoy.Core
 {
     public class Registers : IRegisters
     {
-        byte IRegisters.A { get; set; }
-        byte IRegisters.F { get; set; }
+        public byte A { get; set; }
+        public byte F { get; set; }
 
-        byte IRegisters.B { get => mBC[0]; set => mBC[0] = value; }
-        byte IRegisters.C { get => mBC[1]; set => mBC[1] = value; }
+        public byte B { get; set; }
+        public byte C { get; set; }
 
-        byte[] IRegisters.BC => mBC;
+        public ushort BC => (ushort)(B << 8 | C);
 
-        byte IRegisters.D { get => mDE[0]; set => mDE[0] = value; }
-        byte IRegisters.E { get => mDE[1]; set => mDE[1] = value; }
+        public byte D { get; set; }
+        public byte E { get; set; }
 
-        byte[] IRegisters.DE => mDE;
+        public ushort DE => (ushort)(D << 8 | E);
 
-        byte IRegisters.H { get => mHL[0]; set => mHL[0] = value; }
-        byte IRegisters.L { get => mHL[1]; set => mHL[1] = value; }
+        public byte H { get; set; }
+        public byte L { get; set; }
 
-        byte[] IRegisters.HL => mHL;
+        public ushort HL => (ushort)(H << 8 | L);
 
-        ushort IRegisters.SP { get; set; }
-        ushort IRegisters.PC { get { return mPC; } set { mPC = value; } }
-
-        byte[] mBC = new byte[2];
-        byte[] mDE = new byte[2];
-        byte[] mHL = new byte[2];
-
-        ushort mPC;
-
-        static readonly Logger mLog = LogManager.GetLogger("Registers");
+        public ushort SP { get; set; }
+        public ushort PC { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 
+using CommandLine;
+
 using NLog;
 using NLog.Targets;
 using NLog.Config;
@@ -12,18 +14,27 @@ namespace ConsoleRunner
     {
         static void Main(string[] args)
         {
-            if (args.Length < 1)
-            {
-                Console.Error.WriteLine(USAGE);
-                Environment.Exit(1);
-            }
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
+            CommandLine.Parser.Default.ParseArguments<Arguments>(args)
+                .WithParsed<Arguments>(parsedArgs => Run(parsedArgs));
+        }
+
+        static void Run(Arguments args)
+        {
             ConfigureLogging();
 
-            Rom rom = RomLoader.Load(args[0], failIfCorrupted: false);
-            PrintRomInformation(rom.Information);
+            Rom rom = RomLoader.Load(args.Rom, args.FailIfCorrupted);
 
-            var emulator = Emulator.Init(rom, new RealTimeSleeper());
+            if (args.RomInfo)
+                PrintRomInformation(rom.Information);
+
+            var emulator = Emulator.Init(
+                rom,
+                new RealTimeSleeper(),
+                args.Trace,
+                args.CpuClockStep);
+
             emulator.Run();
         }
 
@@ -96,6 +107,48 @@ namespace ConsoleRunner
 
             Console.WriteLine(
                 $"Checksum: {information.Checksum}");
+        }
+
+        static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine(e.ExceptionObject.ToString());
+            Environment.Exit(1);
+        }
+
+        class Arguments
+        {
+            [Option(
+                't', "trace",
+                Default = false,
+                HelpText = "Traces all of the execution through log"
+            )]
+            public bool Trace { get; set; }
+
+            [Option(
+                'f', "failifcorrupted",
+                Default = false,
+                HelpText = "Fails if the ROM is corrupted."
+            )]
+            public bool FailIfCorrupted { get; set; }
+
+            [Option(
+                HelpText = "Path of the ROM to be loaded.",
+                Required = true
+            )]
+            public string Rom { get; set; }
+
+            [Option(
+                'i', "rominfo",
+                Default = true,
+                HelpText = "Displays ROM information"
+            )]
+            public bool RomInfo { get; set; }
+
+            [Option(
+                "cpustep",
+                Default = 0,
+                HelpText = "Milliseconds between clock cycles")]
+            public long CpuClockStep { get; set; }
         }
 
         const string USAGE = "Usage: ConsoleRunner.exe <Rom path>";

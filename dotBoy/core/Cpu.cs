@@ -1,6 +1,7 @@
 ﻿using System;
 
 using DotBoy.Interfaces;
+using NLog;
 
 namespace DotBoy.Core
 {

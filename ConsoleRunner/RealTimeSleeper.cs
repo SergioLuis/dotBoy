@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using DotBoy.Interfaces;
+﻿using DotBoy.Interfaces;
 
 namespace ConsoleRunner
 {
     class RealTimeSleeper : ISleeper
     {
-        void ISleeper.Sleep(long millis)
+        void ISleeper.Sleep(long ms)
         {
-            return;
+            System.Threading.Thread.Sleep((int)ms);
         }
     }
 }

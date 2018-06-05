@@ -12,82 +12,178 @@ namespace DotBoy.Core.Logging
         {
             get
             {
-                byte result = mInternal.A;
-                mLog.Trace("Read A -> 0x{0:X2}", result);
-                return result;
+                byte value = mInternal.A;
+                TraceRead("A", value);
+                return value;
             }
             set
             {
-                mLog.Trace("Write A <- 0x{0:X2}", value);
+                TraceWrite("A", value);
                 mInternal.A = value;
             }
         }
 
         byte IRegisters.F
         {
-            get { return mInternal.F; }
-            set { mInternal.F = value; }
+            get
+            {
+                byte value = mInternal.F;
+                TraceRead("F", value);
+                return value;
+            }
+            set
+            {
+                TraceWrite("F", value);
+                mInternal.F = value;
+            }
         }
 
         byte IRegisters.B
         {
-            get { return mInternal.B; }
-            set { mInternal.B = value; }
+            get
+            {
+                byte value = mInternal.B;
+                TraceRead("B", value);
+                return value;
+            }
+            set
+            {
+                TraceWrite("B", value);
+                mInternal.B = value;
+            }
         }
 
         byte IRegisters.C
         {
-            get { return mInternal.C; }
-            set { mInternal.C = value; }
+            get
+            {
+                byte value = mInternal.C;
+                TraceRead("C", value);
+                return value;
+            }
+            set
+            {
+                TraceWrite("C", value);
+                mInternal.C = value;
+            }
         }
 
-        byte[] IRegisters.BC => throw new NotImplementedException();
+        ushort IRegisters.BC
+        {
+            get
+            {
+                ushort value = mInternal.BC;
+                TraceRead("BC", value);
+                return value;
+            }
+        }
 
         byte IRegisters.D
         {
-            get { return mInternal.D; }
-            set { mInternal.D = value; }
+            get
+            {
+                byte value = mInternal.D;
+                TraceRead("D", value);
+                return value;
+            }
+            set
+            {
+                TraceWrite("D", value);
+                mInternal.D = value;
+            }
         }
 
         byte IRegisters.E
         {
-            get { return mInternal.E; }
-            set { mInternal.E = value; }
+            get
+            {
+                byte value = mInternal.E;
+                TraceRead("E", value);
+                return value;
+            }
+            set
+            {
+                TraceWrite("E", value);
+                mInternal.E = value;
+            }
         }
 
-        byte[] IRegisters.DE => throw new NotImplementedException();
+        ushort IRegisters.DE
+        {
+            get
+            {
+                ushort value = mInternal.DE;
+                TraceRead("DE", value);
+                return value;
+            }
+        }
 
         byte IRegisters.H
         {
-            get { return mInternal.H; }
-            set { mInternal.H = value; }
+            get
+            {
+                byte value = mInternal.H;
+                TraceRead("H", value);
+                return value;
+            }
+            set
+            {
+                TraceWrite("H", value);
+                mInternal.H = value;
+            }
         }
 
         byte IRegisters.L
         {
-            get { return mInternal.L; }
-            set { mInternal.L = value; }
+            get
+            {
+                byte value = mInternal.L;
+                TraceWrite("L", value);
+                return value;
+            }
+            set
+            {
+                TraceWrite("L", value);
+                mInternal.L = value;
+            }
         }
 
-        byte[] IRegisters.HL => throw new NotImplementedException();
+        ushort IRegisters.HL
+        {
+            get
+            {
+                ushort value = mInternal.HL;
+                TraceRead("HL", value);
+                return value;
+            }
+        }
 
         ushort IRegisters.SP
         {
-            get { return mInternal.SP; }
-            set { mInternal.SP = value; }
+            get
+            {
+                ushort value = mInternal.SP;
+                TraceRead("SP", value);
+                return value;
+            }
+            set
+            {
+                TraceWrite("SP", value);
+                mInternal.SP = value;
+            }
         }
 
         ushort IRegisters.PC
         {
             get
             {
-                ushort result = mInternal.PC;
-                mLog.Trace("Read PC -> 0x{0:X4}", result);
-                return result;
+                ushort value = mInternal.PC;
+                TraceRead("PC", value);
+                return value;
             }
             set
             {
-                mLog.Trace("Writing PC <- 0x{0:X4}", value);
+                TraceWrite("PC", value);
                 mInternal.PC = value;
             }
         }
@@ -95,6 +191,42 @@ namespace DotBoy.Core.Logging
         public LoggedRegisters(IRegisters registers)
         {
             mInternal = registers;
+        }
+
+        void TraceRead(string register, byte value)
+        {
+            mLog.Trace(
+                "R[{0}] -> 0x{1:X2} / {1} / {2}",
+                register,
+                value,
+                Convert.ToString(value, 2).PadLeft(8, '0'));
+        }
+
+        void TraceRead(string register, ushort value)
+        {
+            mLog.Trace(
+                "R[{0}] -> 0x{1:X4} / {1} / {2}",
+                register,
+                value,
+                Convert.ToString(value, 2).PadLeft(16, '0'));
+        }
+
+        void TraceWrite(string register, byte value)
+        {
+            mLog.Trace(
+                "W[{0}] <- 0x{1:X2} / {1} / {2}",
+                register,
+                value,
+                Convert.ToString(value, 2).PadLeft(8, '0'));
+        }
+
+        void TraceWrite(string register, ushort value)
+        {
+            mLog.Trace(
+                "W[{0}] <- 0x{1:X4} / {1} / {2}",
+                register,
+                value,
+                Convert.ToString(value, 2).PadLeft(16, '0'));
         }
 
         readonly IRegisters mInternal;

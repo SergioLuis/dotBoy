@@ -9,32 +9,41 @@ namespace DotBoy.Core
 {
     public class Pipeline : IPipeline
     {
+        public Pipeline(IInstructionSet instructionSet)
+        {
+            mInstructionSet = instructionSet;
+        }
+
         void IPipeline.DecodeAndExecute(
             byte instruction, IRegisters registers, IMemory memory)
         {
-            mLog.Info(
-                "Decoding and executing: {0:D8}",
-                Convert.ToString(instruction, 2));
-
             switch (instruction)
             {
                 case 0x00:
-                    NopInstr.ExecuteNop(registers);
+                    mInstructionSet.Nop(registers);
                     return;
 
-                //case 0xAF:
-                //    LoadInstr.Execute_Ld_r_r(instruction, registers);
-                //    return;
+                case 0xAF:
+                    mInstructionSet.LdRR(instruction, registers);
+                    return;
 
                 case 0xC3:
-                    JumpInstr.Execute_Jp_nn(registers, memory);
+                    mInstructionSet.JpNn(registers, memory);
                     return;
 
                 default:
-                    mLog.Error("Instruction not implemented.");
-                    throw new NotImplementedException();
+                    HaltAndCatchFire(instruction);
+                    break;
             }
         }
+
+        void HaltAndCatchFire(byte instruction)
+        {
+            mLog.Error("Instruction not implemented.");
+            throw new NotImplementedException();
+        }
+
+        readonly IInstructionSet mInstructionSet;
 
         static readonly Logger mLog = LogManager.GetLogger("Pipeline");
     }

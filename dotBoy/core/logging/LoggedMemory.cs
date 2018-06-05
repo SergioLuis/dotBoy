@@ -1,6 +1,7 @@
 ﻿using NLog;
 
 using DotBoy.Interfaces;
+using System;
 
 namespace DotBoy.Core.Logging
 {
@@ -11,7 +12,7 @@ namespace DotBoy.Core.Logging
             get
             {
                 int result = mInternal.Size;
-                mLog.Trace("Read SIZE -> {0}", result);
+                mLog.Trace("R[SIZE] -> {0}", result);
                 return result;
             }
         }
@@ -20,13 +21,13 @@ namespace DotBoy.Core.Logging
         {
             get
             {
-                byte result = mInternal[address];
-                mLog.Trace("Read [0x{0:X4}] -> 0x{1:X2}", address, result);
-                return result;
+                byte value = mInternal[address];
+                TraceRead(address, value);
+                return value;
             }
             set
             {
-                mLog.Trace("Write [0x{0:X4}] <- 0x{1:X2}", address, value);
+                TraceWrite(address, value);
                 mInternal[address] = value;
             }
         }
@@ -36,6 +37,24 @@ namespace DotBoy.Core.Logging
             mInternal = memory;
         }
 
+        void TraceRead(ushort address, byte value)
+        {
+            mLog.Trace(
+                "R[0x{0:X4} / {0}] -> 0x{1:X2} / {1} / {2}",
+                address,
+                value,
+                Convert.ToString(value, 2).PadLeft(8, '0'));
+        }
+
+        void TraceWrite(ushort address, byte value)
+        {
+            mLog.Trace(
+                "W[0x{0:X4} / {0}] <- 0x{1:X2} / {1} / {2}",
+                address,
+                value,
+                Convert.ToString(value, 2).PadLeft(8, '0'));
+        }
+
         void IMemory.BlockLoad(
             byte[] source,
             uint sourceIndex,
@@ -43,7 +62,7 @@ namespace DotBoy.Core.Logging
             uint length)
         {
             mLog.Trace(
-                "BlockLoad: srcIndex: 0x{0:X4} | dstIndex: 0x{1:X4} | length: {2}B",
+                "BlockLoad: srcIndex: 0x{0:X4} | dstIndex: 0x{1:X4} | length: {2} B",
                 sourceIndex,
                 destinationIndex,
                 length);

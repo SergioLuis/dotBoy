@@ -1,6 +1,7 @@
 ﻿using System;
 
 using DotBoy.Core;
+using DotBoy.Core.Instructions;
 using DotBoy.Core.Logging;
 using DotBoy.Interfaces;
 
@@ -8,7 +9,11 @@ namespace DotBoy
 {
     public class Emulator
     {
-        public static Emulator Init(Rom rom, ISleeper sleeper)
+        public static Emulator Init(
+            Rom rom,
+            ISleeper sleeper,
+            bool trace = true,
+            long cpuCloclStep = 0)
         {
             if (rom.Information.Type != CartridgeTypeId.RomOnly)
             {
@@ -19,11 +24,23 @@ namespace DotBoy
             var clock = new Clock();
             var chronometer = new Chronometer(clock);
             IClockDivider cpuClockDivider =
-                ClockDivider.FromMillisPerStep(chronometer, 0);
+                ClockDivider.FromMillisPerStep(chronometer, cpuCloclStep);
 
-            IMemory memory = new LoggedMemory(new Memory());
-            IRegisters registers = new LoggedRegisters(new Registers());
-            IPipeline pipeline = new Pipeline();
+            IMemory memory = trace
+                ? (IMemory)new LoggedMemory(new Memory())
+                : new Memory();
+
+            IRegisters registers = trace
+                ? (IRegisters)new LoggedRegisters(new Registers())
+                : new Registers();
+
+            IInstructionSet instructionSet = trace
+                ? (IInstructionSet)new LoggedInstructionSet(new InstructionSet())
+                : new InstructionSet();
+
+            IPipeline pipeline = trace
+                ? (IPipeline)new LoggedPipeline(new Pipeline(instructionSet))
+                : new Pipeline(instructionSet);
 
             memory.BlockLoad(
                 rom.Content,
@@ -33,9 +50,8 @@ namespace DotBoy
 
             registers.PC = 0x0100;
 
-            var cpu = new Cpu(memory, registers, pipeline);
-
-            cpuClockDivider.AddObserver(cpu);
+            IClockObserver cpu = new Cpu(memory, registers, pipeline);
+            cpuClockDivider.AddObserver(trace ? new LoggedCpu(cpu) : cpu);
 
             return new Emulator(sleeper, chronometer, cpuClockDivider);
         }
@@ -58,16 +74,16 @@ namespace DotBoy
             {
                 mChronometer.Update();
 
-                long minMsLeft = long.MaxValue;
+                long msLeft = long.MaxValue;
                 foreach (var clockDivider in mClockDividers)
                 {
                     clockDivider.Trigger();
 
-                    if (clockDivider.MsLeft < minMsLeft)
-                        minMsLeft = clockDivider.MsLeft;
+                    if (clockDivider.MsLeft < msLeft)
+                        msLeft = clockDivider.MsLeft;
                 }
 
-                mSleeper.Sleep(Math.Max(0, minMsLeft));
+                mSleeper.Sleep(Math.Max(0, msLeft));
             }
         }
 

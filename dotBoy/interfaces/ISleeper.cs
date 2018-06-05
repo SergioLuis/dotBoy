@@ -2,6 +2,6 @@
 {
     public interface ISleeper
     {
-        void Sleep(long millis);
+        void Sleep(long ms);
     }
 }

@@ -14,7 +14,7 @@ namespace DotBoy.Core
 
         bool IChronometer.IsRunning => mbIsRunning;
 
-        long IClock.Millis => mClock.Millis - mIdleTime;
+        long IClock.Ms => mClock.Ms - mIdleTime;
 
         void IChronometer.Start()
         {
@@ -22,7 +22,7 @@ namespace DotBoy.Core
                 return;
 
             mClock.Update();
-            mIdleTime += mClock.Millis - mLastStop;
+            mIdleTime += mClock.Ms - mLastStop;
             mbIsRunning = true;
         }
 
@@ -31,8 +31,8 @@ namespace DotBoy.Core
             if (!mbIsRunning)
                 return;
 
-            mbIsRunning = true;
-            mLastStop = mClock.Millis;
+            mbIsRunning = false;
+            mLastStop = mClock.Ms;
         }
 
         IClock IClock.Update()
@@ -40,14 +40,14 @@ namespace DotBoy.Core
             if (!mbIsRunning)
                 throw new InvalidOperationException("The chronometer was not started!");
 
-            mClockMillis = mClock.Update().Millis;
+            mClockMs = mClock.Update().Ms;
             return this;
         }
 
         bool mbIsRunning = false;
         long mIdleTime = 0;
         long mLastStop = 0;
-        long mClockMillis = 0;
+        long mClockMs = 0;
 
         readonly IClock mClock;
     }

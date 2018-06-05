@@ -2,7 +2,7 @@
 {
     public interface IClock
     {
-        long Millis { get; }
+        long Ms { get; }
 
         IClock Update();
     }

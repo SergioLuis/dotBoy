@@ -34,7 +34,7 @@ namespace DotBoy.Core
 
         long IClockDivider.MsPerStep => mMillisPerStep;
 
-        long IClockDivider.MsLeft => (mLastTime + mMillisPerStep) - mClock.Millis;
+        long IClockDivider.MsLeft => (mLastTime + mMillisPerStep) - mClock.Ms;
 
         void IClockDivider.AddObserver(IClockObserver observer)
         {

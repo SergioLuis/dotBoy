@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using ConsoleRunner.Debugging.Breakpoints;
+using ConsoleRunner.Debugging.Conditions;
 
 namespace ConsoleRunner.Debugging.Commands
 {
@@ -26,6 +28,8 @@ namespace ConsoleRunner.Debugging.Commands
             mSubcommands.AddCommand(new EnableBreakpointCommand());
             mSubcommands.AddCommand(new DisableBreakpointCommand());
             mSubcommands.AddCommand(new RemoveBreakpointCommand());
+
+            mSubcommands.AddCommand(new ExecuteRunCommand());
         }
 
         internal class ExecuteListBreakpointsCommand : FinalCommand
@@ -144,7 +148,7 @@ namespace ConsoleRunner.Debugging.Commands
                     public override void Execute(string[] args, DebuggingItems items)
                     {
                         if (!RegisterValueBreakpoint.TryCreate(
-                            args[0], ushort.Parse(args[1]), out var breakpoint))
+                            args[0], ushort.Parse(args[1]), items, out var breakpoint))
                         {
                             ConsoleIO.WriteLine(
                                 Localization.GetString(
@@ -336,6 +340,56 @@ namespace ConsoleRunner.Debugging.Commands
                             Localization.Names.ExecuteRemoveBreakpointCommandSuccessMessage,
                             breakpointIndex));
                 }
+            }
+        }
+
+        internal class ExecuteRunCommand : FinalCommand
+        {
+            public override string Name =>
+                Localization.GetString(
+                    Localization.Names.ExecuteRunUntilBreakpointCommandName);
+
+            public override string Description =>
+                Localization.GetString(
+                    Localization.Names.ExecuteRunUntilBreakpointCommandDescription);
+
+            public override bool CanExecute(string[] args, DebuggingItems items)
+            {
+                if (args.Length != 1)
+                    return false;
+
+                return Name.StartsWith(
+                    args[0],
+                    StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            public override void Execute(string[] args, DebuggingItems items)
+            {
+                if (items.Breakpoints.Count == 0)
+                {
+                    ConsoleIO.WriteLine(
+                        Localization.GetString(
+                            Localization.Names.ExecuteRunUntilBreakpointFailureMessage));
+                    return;
+                }
+
+                if (items.Breakpoints.FirstOrDefault(br => br.Enabled) == null)
+                {
+                    ConsoleIO.WriteLine(
+                        Localization.GetString(
+                            Localization.Names.ExecuteRunUntilBreakpointFailureMessage));
+                    return;
+                }
+
+                var condition = new BreakpointCondition(items.Breakpoints);
+
+                items.Emulator.RunUntilCondition(
+                    ((ICondition)condition).IsConditionMet);
+
+                ConsoleIO.WriteLine(
+                    Localization.GetString(
+                        Localization.Names.ExecuteRunUntilBreakpointSuccessMessage,
+                        condition.TriggeredBreakpoint.Condition));
             }
         }
     }

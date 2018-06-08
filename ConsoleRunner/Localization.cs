@@ -87,6 +87,11 @@ namespace ConsoleRunner
             ExecuteRemoveBreakpointCommandSuccessMessage,
             ExecuteRemoveBreakpointCommandFailureMessage,
 
+            ExecuteRunUntilBreakpointCommandName,
+            ExecuteRunUntilBreakpointCommandDescription,
+            ExecuteRunUntilBreakpointSuccessMessage,
+            ExecuteRunUntilBreakpointFailureMessage,
+
             RegisterValueBreakpointCondition,
             RegisterValueBreakpointDescription,
 
@@ -227,6 +232,13 @@ namespace ConsoleRunner
             mStrings.Add(Names.ExecuteRemoveBreakpointCommandDescription, "Removes the breakpoint specified by index.");
             mStrings.Add(Names.ExecuteRemoveBreakpointCommandSuccessMessage, "Breakpoint with index {0} correctly removed.");
             mStrings.Add(Names.ExecuteRemoveBreakpointCommandFailureMessage, "Could not remove breakpoint with index {0}.");
+            #endregion
+
+            #region ExecuteUntilBreakpointCommand
+            mStrings.Add(Names.ExecuteRunUntilBreakpointCommandName, "run");
+            mStrings.Add(Names.ExecuteRunUntilBreakpointCommandDescription, "Runs the emulator until a breakpoint triggers.");
+            mStrings.Add(Names.ExecuteRunUntilBreakpointSuccessMessage, "Breakpoint with condition ({0}) triggered!");
+            mStrings.Add(Names.ExecuteRunUntilBreakpointFailureMessage, "There are no breakpoints configured!");
             #endregion
 
             #region RegisterValueBreakpoint

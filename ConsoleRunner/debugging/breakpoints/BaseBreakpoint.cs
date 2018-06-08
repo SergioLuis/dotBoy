@@ -14,6 +14,6 @@
             Enabled = true;
         }
 
-        internal abstract bool ShouldTrigger(DebuggingItems items);
+        internal abstract bool ShouldTrigger();
     }
 }

@@ -13,6 +13,7 @@ namespace ConsoleRunner.Debugging.Breakpoints
         internal static bool TryCreate(
             string registerName,
             ushort registerValue,
+            DebuggingItems items,
             out BaseBreakpoint breakpoint)
         {
             var validRegisters = new HashSet<string>(
@@ -25,11 +26,15 @@ namespace ConsoleRunner.Debugging.Breakpoints
                 return false;
             }
 
-            breakpoint = new RegisterValueBreakpoint(registerName, registerValue);
+            breakpoint = new RegisterValueBreakpoint(
+                registerName, registerValue, items);
             return true;
         }
 
-        RegisterValueBreakpoint(string registerName, ushort registerValue)
+        RegisterValueBreakpoint(
+            string registerName,
+            ushort registerValue,
+            DebuggingItems items)
             : base(
                   condition: Localization.GetString(
                       Localization.Names.RegisterValueBreakpointCondition,
@@ -42,11 +47,12 @@ namespace ConsoleRunner.Debugging.Breakpoints
         {
             RegisterName = registerName;
             RegisterValue = registerValue;
+            mItems = items;
         }
 
-        internal override bool ShouldTrigger(DebuggingItems debuggingitems)
+        internal override bool ShouldTrigger()
         {
-            IRegisters registers = debuggingitems.Registers;
+            IRegisters registers = mItems.Registers;
 
             switch (RegisterName.ToLowerInvariant())
             {
@@ -83,5 +89,7 @@ namespace ConsoleRunner.Debugging.Breakpoints
 
             return false;
         }
+
+        readonly DebuggingItems mItems;
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface IPipeline
     {
-        void DecodeAndExecute(
+        bool DecodeAndExecute(
             byte instruction, IRegisters registers, IMemory memory);
     }
 }

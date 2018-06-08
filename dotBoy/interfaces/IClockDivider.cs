@@ -6,6 +6,6 @@
         long MsLeft { get; }
 
         void AddObserver(IClockObserver observer);
-        void Trigger();
+        bool Trigger();
     }
 }

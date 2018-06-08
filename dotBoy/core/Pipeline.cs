@@ -14,14 +14,15 @@ namespace DotBoy.Core
             mInstructionSet = instructionSet;
         }
 
-        void IPipeline.DecodeAndExecute(
+        bool IPipeline.DecodeAndExecute(
             byte instruction, IRegisters registers, IMemory memory)
         {
+            bool succeeded = true;
             switch (instruction)
             {
                 case 0x00:
                     mInstructionSet.Nop(registers);
-                    return;
+                    break; ;
 
                 #region 8-bit Transfer and Input/Output Instructions
                 case 0x7F:
@@ -74,7 +75,7 @@ namespace DotBoy.Core
                 case 0x6C:
                 case 0x6D:
                     mInstructionSet.LdRR(instruction, registers);
-                    return;
+                    break;
 
                 case 0x3E:
                 case 0x06:
@@ -84,19 +85,19 @@ namespace DotBoy.Core
                 case 0x26:
                 case 0x2E:
                     mInstructionSet.LdRN(instruction, registers, memory);
-                    return;
+                    break;
 
                 case 0x36:
                     mInstructionSet.LdHLN(registers, memory);
-                    return;
+                    break;
 
                 case 0x22:
                     mInstructionSet.LdHLiA(registers, memory);
-                    return;
+                    break;
 
                 case 0x32:
                     mInstructionSet.LdHLdA(registers, memory);
-                    return;
+                    break;
                 #endregion
 
                 #region 16-Bit Transfer Instructions
@@ -105,13 +106,13 @@ namespace DotBoy.Core
                 case 0x21:
                 case 0x31:
                     mInstructionSet.LdDdNn(instruction, registers, memory);
-                    return;
+                    break;
                 #endregion
 
                 #region  Jump instructions
                 case 0xC3:
                     mInstructionSet.JpNn(registers, memory);
-                    return;
+                    break;
                 #endregion
 
                 #region 8-Bit Arithmetic and Logical Operation Instructions
@@ -123,15 +124,15 @@ namespace DotBoy.Core
                 case 0xAC:
                 case 0xAD:
                     mInstructionSet.XorR(instruction, registers);
-                    return;
+                    break;
 
                 case 0xDE:
                     mInstructionSet.XorN(instruction, registers, memory);
-                    return;
+                    break;
 
                 case 0xAE:
                     mInstructionSet.XorHL(instruction, registers, memory);
-                    return;
+                    break;
 
                 case 0x3D:
                 case 0x05:
@@ -141,23 +142,25 @@ namespace DotBoy.Core
                 case 0x25:
                 case 0x2D:
                     mInstructionSet.DecR(instruction, registers);
-                    return;
+                    break;
 
                 case 0x35:
                     mInstructionSet.DecHL(registers, memory);
-                    return;
+                    break;
                 #endregion
 
                 default:
                     HaltAndCatchFire(instruction);
+                    succeeded = false;
                     break;
             }
+
+            return succeeded;
         }
 
         void HaltAndCatchFire(byte instruction)
         {
             mLog.Error("Instruction not implemented.");
-            throw new NotImplementedException();
         }
 
         readonly IInstructionSet mInstructionSet;

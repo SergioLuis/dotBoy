@@ -1,11 +1,11 @@
 ﻿using System;
 
-using DotBoy.Interfaces;
 using NLog;
+
+using DotBoy.Interfaces;
 
 namespace DotBoy.Core
 {
-#warning Untested class
     public class Cpu : IClockObserver
     {
         public Cpu(
@@ -18,10 +18,10 @@ namespace DotBoy.Core
             mPipeline = pipeline;
         }
 
-        void IClockObserver.OnClockTick()
+        bool IClockObserver.OnClockTick()
         {
             byte instruction = mMemory[mRegisters.PC];
-            mPipeline.DecodeAndExecute(instruction, mRegisters, mMemory);
+            return mPipeline.DecodeAndExecute(instruction, mRegisters, mMemory);
         }
 
         readonly IMemory mMemory;

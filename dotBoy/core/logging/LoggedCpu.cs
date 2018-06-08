@@ -11,11 +11,12 @@ namespace DotBoy.Core.Logging
             mCpu = cpu;
         }
 
-        void IClockObserver.OnClockTick()
+        bool IClockObserver.OnClockTick()
         {
             mLog.Info("CPU cycle started.");
-            mCpu.OnClockTick();
+            bool succeeded = mCpu.OnClockTick();
             mLog.Info("CPU cycle finished");
+            return succeeded;
         }
 
         readonly IClockObserver mCpu;

@@ -41,15 +41,17 @@ namespace DotBoy.Core
             mObservers.Add(observer);
         }
 
-        void IClockDivider.Trigger()
+        bool IClockDivider.Trigger()
         {
             if (mThis.MsLeft > 0)
-                return;
+                return true;
 
+            bool result = true;
             foreach (var observer in mObservers)
-                observer.OnClockTick();
+                result = observer.OnClockTick() && result;
 
             mLastTime += mMillisPerStep;
+            return result;
         }
 
         long mLastTime;

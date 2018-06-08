@@ -15,14 +15,14 @@ namespace DotBoy.Core.Logging
             mInternal = pipeline;
         }
 
-        void IPipeline.DecodeAndExecute(byte instruction, IRegisters registers, IMemory memory)
+        bool IPipeline.DecodeAndExecute(byte instruction, IRegisters registers, IMemory memory)
         {
             mLog.Info(
                 "Decoding and executing: {0} (0x{1:X2})",
                 Convert.ToString(instruction, 2).PadLeft(8, '0'),
                 instruction);
 
-            mInternal.DecodeAndExecute(instruction, registers, memory);
+            return mInternal.DecodeAndExecute(instruction, registers, memory);
         }
 
         IPipeline mInternal;

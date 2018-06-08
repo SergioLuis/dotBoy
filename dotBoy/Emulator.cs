@@ -98,9 +98,10 @@ namespace DotBoy
                 mChronometer.Update();
 
                 long msLeft = long.MaxValue;
+                bool cycleSucceeded = true;
                 foreach (var clockDivider in mClockDividers)
                 {
-                    clockDivider.Trigger();
+                    cycleSucceeded = clockDivider.Trigger() && cycleSucceeded;
 
                     if (clockDivider.MsLeft < msLeft)
                         msLeft = clockDivider.MsLeft;
@@ -108,12 +109,12 @@ namespace DotBoy
 
                 mSleeper.Sleep(Math.Max(0, msLeft));
 
-                if (condition.Invoke())
+                if (!cycleSucceeded || condition.Invoke())
                 {
                     mChronometer.Update();
                     mChronometer.Stop();
                     return;
-                }
+                }   
             }
         }
 

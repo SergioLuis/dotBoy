@@ -2,6 +2,6 @@
 {
     public interface IClockObserver
     {
-        void OnClockTick();
+        bool OnClockTick();
     }
 }

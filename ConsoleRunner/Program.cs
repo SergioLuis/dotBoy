@@ -7,6 +7,8 @@ using NLog.Targets;
 using NLog.Config;
 
 using DotBoy;
+using DotBoy.Interfaces;
+using ConsoleRunner.Debugging;
 
 namespace ConsoleRunner
 {
@@ -17,10 +19,10 @@ namespace ConsoleRunner
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
             CommandLine.Parser.Default.ParseArguments<Arguments>(args)
-                .WithParsed<Arguments>(parsedArgs => Run(parsedArgs));
+                .WithParsed<Arguments>(parsedArgs => RunProgram(parsedArgs));
         }
 
-        static void Run(Arguments args)
+        static void RunProgram(Arguments args)
         {
             ConfigureLogging();
 
@@ -29,7 +31,13 @@ namespace ConsoleRunner
             if (args.RomInfo)
                 PrintRomInformation(rom.Information);
 
-            var emulator = Emulator.Init(
+            if (args.Debug)
+            {
+                Debugger.RunDebugSession(rom, args.Trace, args.CpuClockStep);
+                return;
+            }
+
+            var emulator = Emulator.InitForRegularRun(
                 rom,
                 new RealTimeSleeper(),
                 args.Trace,
@@ -132,8 +140,8 @@ namespace ConsoleRunner
             public bool FailIfCorrupted { get; set; }
 
             [Option(
-                HelpText = "Path of the ROM to be loaded.",
-                Required = true
+                Required = true,
+                HelpText = "Path of the ROM to be loaded."
             )]
             public string Rom { get; set; }
 
@@ -149,6 +157,12 @@ namespace ConsoleRunner
                 Default = 0,
                 HelpText = "Milliseconds between clock cycles")]
             public long CpuClockStep { get; set; }
+
+            [Option(
+                "debug",
+                Default = false,
+                HelpText = "Starts an interactive debugging session")]
+            public bool Debug { get; set; }
         }
 
         const string USAGE = "Usage: ConsoleRunner.exe <Rom path>";

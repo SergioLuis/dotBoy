@@ -9,6 +9,11 @@ namespace DotBoy.Interfaces
         byte A { get; set; }
         byte F { get; set; }
 
+        bool FlagZ { get; set; }
+        bool FlagN { get; set; }
+        bool FlagH { get; set; }
+        bool FlagCY { get; set; }
+
         byte B { get; set; }
         byte C { get; set; }
         ushort BC { get; }
@@ -19,7 +24,7 @@ namespace DotBoy.Interfaces
 
         byte H { get; set; }
         byte L { get; set; }
-        ushort HL { get; }
+        ushort HL { get; set; }
 
         ushort SP { get; set; }
         ushort PC { get; set; }

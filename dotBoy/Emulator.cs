@@ -9,11 +9,30 @@ namespace DotBoy
 {
     public class Emulator
     {
-        public static Emulator Init(
+        public static Emulator InitForRegularRun(
             Rom rom,
             ISleeper sleeper,
             bool trace = true,
-            long cpuCloclStep = 0)
+            long cpuClockStep = 0)
+        {
+            return InitForInteractiveDebugging(
+                rom, sleeper, trace, cpuClockStep,
+                out _, out _, out _, out _, out _, out _, out _, out _);
+        }
+
+        public static Emulator InitForInteractiveDebugging(
+            Rom rom,
+            ISleeper sleeper,
+            bool trace,
+            long cpuClockStep,
+            out IClock clock,
+            out IChronometer chronometer,
+            out IClockDivider clockDivider,
+            out IClockObserver cpuClockObserver,
+            out IMemory memory,
+            out IRegisters registers,
+            out IInstructionSet instructionSet,
+            out IPipeline pipeline)
         {
             if (rom.Information.Type != CartridgeTypeId.RomOnly)
             {
@@ -21,24 +40,23 @@ namespace DotBoy
                 Environment.Exit(1);
             }
 
-            var clock = new Clock();
-            var chronometer = new Chronometer(clock);
-            IClockDivider cpuClockDivider =
-                ClockDivider.FromMillisPerStep(chronometer, cpuCloclStep);
+            clock = new Clock();
+            chronometer = new Chronometer(clock);
+            clockDivider = ClockDivider.FromMillisPerStep(chronometer, cpuClockStep);
 
-            IMemory memory = trace
+            memory = trace
                 ? (IMemory)new LoggedMemory(new Memory())
                 : new Memory();
 
-            IRegisters registers = trace
+            registers = trace
                 ? (IRegisters)new LoggedRegisters(new Registers())
                 : new Registers();
 
-            IInstructionSet instructionSet = trace
+            instructionSet = trace
                 ? (IInstructionSet)new LoggedInstructionSet(new InstructionSet())
                 : new InstructionSet();
 
-            IPipeline pipeline = trace
+            pipeline = trace
                 ? (IPipeline)new LoggedPipeline(new Pipeline(instructionSet))
                 : new Pipeline(instructionSet);
 
@@ -50,10 +68,10 @@ namespace DotBoy
 
             registers.PC = 0x0100;
 
-            IClockObserver cpu = new Cpu(memory, registers, pipeline);
-            cpuClockDivider.AddObserver(trace ? new LoggedCpu(cpu) : cpu);
+            cpuClockObserver = new Cpu(memory, registers, pipeline);
+            clockDivider.AddObserver(trace ? new LoggedCpu(cpuClockObserver) : cpuClockObserver);
 
-            return new Emulator(sleeper, chronometer, cpuClockDivider);
+            return new Emulator(sleeper, chronometer, clockDivider);
         }
 
         Emulator(
@@ -67,6 +85,11 @@ namespace DotBoy
         }
 
         public void Run()
+        {
+            RunUntilCondition(() => false);
+        }
+
+        public void RunUntilCondition(Func<bool> condition)
         {
             mChronometer.Start();
 
@@ -84,6 +107,13 @@ namespace DotBoy
                 }
 
                 mSleeper.Sleep(Math.Max(0, msLeft));
+
+                if (condition.Invoke())
+                {
+                    mChronometer.Update();
+                    mChronometer.Stop();
+                    return;
+                }
             }
         }
 

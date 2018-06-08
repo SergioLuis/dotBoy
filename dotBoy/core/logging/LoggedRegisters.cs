@@ -8,182 +8,247 @@ namespace DotBoy.Core.Logging
 {
     public class LoggedRegisters : IRegisters
     {
-        byte IRegisters.A
+        public byte A
         {
             get
             {
                 byte value = mInternal.A;
-                TraceRead("A", value);
+                TraceRegisterRead("A", value);
                 return value;
             }
             set
             {
-                TraceWrite("A", value);
+                TraceRegisterWrite("A", value);
                 mInternal.A = value;
             }
         }
 
-        byte IRegisters.F
+        public byte F
         {
             get
             {
                 byte value = mInternal.F;
-                TraceRead("F", value);
+                TraceRegisterRead("F", value);
                 return value;
             }
             set
             {
-                TraceWrite("F", value);
+                TraceRegisterWrite("F", value);
                 mInternal.F = value;
             }
         }
 
-        byte IRegisters.B
+        public bool FlagZ
+        {
+            get
+            {
+                bool value = mInternal.FlagZ;
+                TraceFlagRead("z", value);
+                return value;
+            }
+            set
+            {
+                TraceFlagWrite("z", value);
+                mInternal.FlagZ = value;
+            }
+        }
+
+        public bool FlagN
+        {
+            get
+            {
+                bool value = mInternal.FlagN;
+                TraceFlagRead("n", value);
+                return value;
+            }
+            set
+            {
+                TraceFlagWrite("n", value);
+                mInternal.FlagN = value;
+            }
+        }
+
+        public bool FlagH
+        {
+            get
+            {
+                bool value = mInternal.FlagH;
+                TraceFlagRead("h", value);
+                return value;
+            }
+            set
+            {
+                TraceFlagWrite("h", value);
+                mInternal.FlagH = value;
+            }
+        }
+
+        public bool FlagCY
+        {
+            get
+            {
+                bool value = mInternal.FlagCY;
+                TraceFlagRead("cy", value);
+                return value;
+            }
+            set
+            {
+                TraceFlagWrite("cy", value);
+                mInternal.FlagCY = value;
+            }
+        }
+
+        public byte B
         {
             get
             {
                 byte value = mInternal.B;
-                TraceRead("B", value);
+                TraceRegisterRead("B", value);
                 return value;
             }
             set
             {
-                TraceWrite("B", value);
+                TraceRegisterWrite("B", value);
                 mInternal.B = value;
             }
         }
 
-        byte IRegisters.C
+        public byte C
         {
             get
             {
                 byte value = mInternal.C;
-                TraceRead("C", value);
+                TraceRegisterRead("C", value);
                 return value;
             }
             set
             {
-                TraceWrite("C", value);
+                TraceRegisterWrite("C", value);
                 mInternal.C = value;
             }
         }
 
-        ushort IRegisters.BC
+        public ushort BC
         {
             get
             {
                 ushort value = mInternal.BC;
-                TraceRead("BC", value);
+                TraceRegisterRead("BC", value);
                 return value;
             }
         }
 
-        byte IRegisters.D
+        public byte D
         {
             get
             {
                 byte value = mInternal.D;
-                TraceRead("D", value);
+                TraceRegisterRead("D", value);
                 return value;
             }
             set
             {
-                TraceWrite("D", value);
+                TraceRegisterWrite("D", value);
                 mInternal.D = value;
             }
         }
 
-        byte IRegisters.E
+        public byte E
         {
             get
             {
                 byte value = mInternal.E;
-                TraceRead("E", value);
+                TraceRegisterRead("E", value);
                 return value;
             }
             set
             {
-                TraceWrite("E", value);
+                TraceRegisterWrite("E", value);
                 mInternal.E = value;
             }
         }
 
-        ushort IRegisters.DE
+        public ushort DE
         {
             get
             {
                 ushort value = mInternal.DE;
-                TraceRead("DE", value);
+                TraceRegisterRead("DE", value);
                 return value;
             }
         }
 
-        byte IRegisters.H
+        public byte H
         {
             get
             {
                 byte value = mInternal.H;
-                TraceRead("H", value);
+                TraceRegisterRead("H", value);
                 return value;
             }
             set
             {
-                TraceWrite("H", value);
+                TraceRegisterWrite("H", value);
                 mInternal.H = value;
             }
         }
 
-        byte IRegisters.L
+        public byte L
         {
             get
             {
                 byte value = mInternal.L;
-                TraceWrite("L", value);
+                TraceRegisterWrite("L", value);
                 return value;
             }
             set
             {
-                TraceWrite("L", value);
+                TraceRegisterWrite("L", value);
                 mInternal.L = value;
             }
         }
 
-        ushort IRegisters.HL
+        public ushort HL
         {
             get
             {
                 ushort value = mInternal.HL;
-                TraceRead("HL", value);
+                TraceRegisterRead("HL", value);
                 return value;
+            }
+            set
+            {
+                TraceRegisterWrite("HL", value);
+                mInternal.HL = value;
             }
         }
 
-        ushort IRegisters.SP
+        public ushort SP
         {
             get
             {
                 ushort value = mInternal.SP;
-                TraceRead("SP", value);
+                TraceRegisterRead("SP", value);
                 return value;
             }
             set
             {
-                TraceWrite("SP", value);
+                TraceRegisterWrite("SP", value);
                 mInternal.SP = value;
             }
         }
 
-        ushort IRegisters.PC
+        public ushort PC
         {
             get
             {
                 ushort value = mInternal.PC;
-                TraceRead("PC", value);
+                TraceRegisterRead("PC", value);
                 return value;
             }
             set
             {
-                TraceWrite("PC", value);
+                TraceRegisterWrite("PC", value);
                 mInternal.PC = value;
             }
         }
@@ -193,7 +258,7 @@ namespace DotBoy.Core.Logging
             mInternal = registers;
         }
 
-        void TraceRead(string register, byte value)
+        void TraceRegisterRead(string register, byte value)
         {
             mLog.Trace(
                 "R[{0}] -> 0x{1:X2} / {1} / {2}",
@@ -202,7 +267,7 @@ namespace DotBoy.Core.Logging
                 Convert.ToString(value, 2).PadLeft(8, '0'));
         }
 
-        void TraceRead(string register, ushort value)
+        void TraceRegisterRead(string register, ushort value)
         {
             mLog.Trace(
                 "R[{0}] -> 0x{1:X4} / {1} / {2}",
@@ -211,7 +276,13 @@ namespace DotBoy.Core.Logging
                 Convert.ToString(value, 2).PadLeft(16, '0'));
         }
 
-        void TraceWrite(string register, byte value)
+        void TraceFlagRead(string flag, bool value)
+        {
+            mLog.Trace(
+                "R[F({0})] -> {1}", flag, value ? '1' : '0');
+        }
+
+        void TraceRegisterWrite(string register, byte value)
         {
             mLog.Trace(
                 "W[{0}] <- 0x{1:X2} / {1} / {2}",
@@ -220,13 +291,19 @@ namespace DotBoy.Core.Logging
                 Convert.ToString(value, 2).PadLeft(8, '0'));
         }
 
-        void TraceWrite(string register, ushort value)
+        void TraceRegisterWrite(string register, ushort value)
         {
             mLog.Trace(
                 "W[{0}] <- 0x{1:X4} / {1} / {2}",
                 register,
                 value,
                 Convert.ToString(value, 2).PadLeft(16, '0'));
+        }
+
+        void TraceFlagWrite(string flag, bool value)
+        {
+            mLog.Trace(
+                "W[F({0})] <- {1}", flag, value ? '1' : '0');
         }
 
         readonly IRegisters mInternal;

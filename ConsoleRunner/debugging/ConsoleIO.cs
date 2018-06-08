@@ -17,6 +17,22 @@ namespace ConsoleRunner.Debugging
             Console.WriteLine($" {line}");
         }
 
+        internal static string FormatNumber(byte value)
+        {
+            return string.Format(
+                "{0} / 0x{0:X2} / {1}",
+                value,
+                Convert.ToString(value, 2).PadLeft(8, '0'));
+        }
+
+        internal static string FormatNumber(ushort value)
+        {
+            return string.Format(
+                "{0} / 0x{0:X2} / {1}",
+                value,
+                Convert.ToString(value, 2).PadLeft(16, '0'));
+        }
+
         internal static string[] Split(string str)
         {
             var sb = new StringBuilder();

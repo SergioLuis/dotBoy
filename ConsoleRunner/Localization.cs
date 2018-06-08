@@ -18,15 +18,29 @@ namespace ConsoleRunner
             ReadRegisterCommandDescription,
             ReadRegisterCommandPrompt,
 
-            ExecuteReadRegisterCommandName,
-            ExecuteReadRegisterCommandDescription,
+            ExecuteReadOneRegisterCommandName,
+            ExecuteReadOneRegisterCommandDescription,
+
+            ExecuteReadAllRegistersCommandName,
+            ExecuteReadAllRegistersCommandDescription,
+
+            ExecuteReadFlagsCommandName,
+            ExecuteReadFlagsCommandDescription,
 
             WriteRegisterCommandName,
             WriteRegisterCommandDescription,
             WriteRegisterCommandPrompt,
 
-            ExecuteWriteRegisterCommandName,
-            ExecuteWriteRegisterCommandDescription,
+            ExecuteWriteOneRegisterCommandName,
+            ExecuteWriteOneRegisterCommandDescription,
+
+            ExecuteResetAllRegistersCommandName,
+            ExecuteResetAllRegistersCommandDescription,
+            ExecuteResetAllRegistersSuccessMessage,
+
+            ExecuteWriteFlagCommandName,
+            ExecuteWriteFlagCommandDescription,
+            ExecuteWriteFlagCommandSuccessMessage,
 
             ClockCommandName,
             ClockCommandDescription,
@@ -131,9 +145,19 @@ namespace ConsoleRunner
             mStrings.Add(Names.ReadRegisterCommandPrompt, "registers-read");
             #endregion
 
-            #region ExecuteReadRegisterCommand
-            mStrings.Add(Names.ExecuteReadRegisterCommandName, "[register]");
-            mStrings.Add(Names.ExecuteReadRegisterCommandDescription, "Reads data from the specified register. Valid registers are ({0}).");
+            #region ExecuteReadOneRegisterCommand
+            mStrings.Add(Names.ExecuteReadOneRegisterCommandName, "[register]");
+            mStrings.Add(Names.ExecuteReadOneRegisterCommandDescription, "Reads data from the specified register. Valid registers are ({0}).");
+            #endregion
+
+            #region ExecuteReadAllRegistersCommand
+            mStrings.Add(Names.ExecuteReadAllRegistersCommandName, "all");
+            mStrings.Add(Names.ExecuteReadAllRegistersCommandDescription, "Reads data from all of the registers.");
+            #endregion
+
+            #region ExecuteReadFlagsCommand
+            mStrings.Add(Names.ExecuteReadFlagsCommandName, "flags");
+            mStrings.Add(Names.ExecuteReadFlagsCommandDescription, "Reads and interprets the flags from register (f).");
             #endregion
 
             #region WriteRegisterCommand
@@ -143,8 +167,20 @@ namespace ConsoleRunner
             #endregion
 
             #region ExecuteWriteRegisterCommand
-            mStrings.Add(Names.ExecuteWriteRegisterCommandName, "[register] [0-9]+");
-            mStrings.Add(Names.ExecuteWriteRegisterCommandDescription, "Writes data to the specified register. Valid registers are ({0}).");
+            mStrings.Add(Names.ExecuteWriteOneRegisterCommandName, "[register] [0-9]+");
+            mStrings.Add(Names.ExecuteWriteOneRegisterCommandDescription, "Writes data to the specified register. Valid registers are ({0}).");
+            #endregion
+
+            #region ExecuteResetAllRegistersCommand
+            mStrings.Add(Names.ExecuteResetAllRegistersCommandName, "reset");
+            mStrings.Add(Names.ExecuteResetAllRegistersCommandDescription, "Reset all of the registers to their initial values.");
+            mStrings.Add(Names.ExecuteResetAllRegistersSuccessMessage, "Correctly reset all of the registers");
+            #endregion
+
+            #region ExecuteWriteFlagCommand
+            mStrings.Add(Names.ExecuteWriteFlagCommandName, "[flag] [1|0]");
+            mStrings.Add(Names.ExecuteWriteFlagCommandDescription, "Writes the specified bit to the specified flag of the register (f)");
+            mStrings.Add(Names.ExecuteWriteFlagCommandSuccessMessage, "Flag {0} correctly set to {1}.");
             #endregion
 
             #region ClockCommand

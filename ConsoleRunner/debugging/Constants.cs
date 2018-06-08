@@ -20,5 +20,18 @@
                 A, F, B, C, D, E, H, L, SP, PC
             };
         }
+
+        internal static class Flags
+        {
+            internal const string Zero = "z";
+            internal const string Subs = "n";
+            internal const string Half = "h";
+            internal const string Full = "cy";
+
+            internal static readonly string[] Names = new string[]
+            {
+                Zero, Subs, Half, Full
+            };
+        }
     }
 }

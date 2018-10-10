@@ -114,7 +114,7 @@ namespace DotBoy
                     mChronometer.Update();
                     mChronometer.Stop();
                     return;
-                }   
+                }
             }
         }
 

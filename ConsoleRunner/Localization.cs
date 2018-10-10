@@ -42,6 +42,27 @@ namespace ConsoleRunner
             ExecuteWriteFlagCommandDescription,
             ExecuteWriteFlagCommandSuccessMessage,
 
+            MemoryCommandName,
+            MemoryCommandDescription,
+            MemoryCommandPrompt,
+
+            ReadMemoryCommandName,
+            ReadMemoryCommandDescription,
+            ReadMemoryCommandPrompt,
+
+            ExecuteReadMemoryCommandName,
+            ExecuteReadMemoryCommandDescription,
+            ExecuteReadMemoryCommandInvalidAddressMessage,
+
+            WriteMemoryCommandName,
+            WriteMemoryCommandDescription,
+            WriteMemoryCommandPrompt,
+
+            ExecuteWriteMemoryCommandName,
+            ExecuteWriteMemoryCommandDescription,
+            ExecuteWriteMemoryCommandInvalidAddressMessage,
+            ExecuteWriteMemoryCommandInvalidDataMessage,
+
             ClockCommandName,
             ClockCommandDescription,
             ClockCommandPrompt,
@@ -183,9 +204,40 @@ namespace ConsoleRunner
             mStrings.Add(Names.ExecuteWriteFlagCommandSuccessMessage, "Flag {0} correctly set to {1}.");
             #endregion
 
+            #region MemoryCommand
+            mStrings.Add(Names.MemoryCommandName, "memory");
+            mStrings.Add(Names.MemoryCommandDescription, "Allows operating directly with the device's memory.");
+            mStrings.Add(Names.MemoryCommandPrompt, "memory");
+            #endregion
+
+            #region ReadMemoryCommand
+            mStrings.Add(Names.ReadMemoryCommandName, "read");
+            mStrings.Add(Names.ReadMemoryCommandDescription, "Allows reading from memory directly.");
+            mStrings.Add(Names.ReadMemoryCommandPrompt, "memory-read");
+            #endregion
+
+            #region ExecuteReadMemoryCommand
+            mStrings.Add(Names.ExecuteReadMemoryCommandName, "[address]");
+            mStrings.Add(Names.ExecuteReadMemoryCommandDescription, "Reads data from the specified address.");
+            mStrings.Add(Names.ExecuteReadMemoryCommandInvalidAddressMessage, "Invalid memory address. Valid addresses are within [0-{0}].");
+            #endregion
+
+            #region WriteMemoryCommand
+            mStrings.Add(Names.WriteMemoryCommandName, "write");
+            mStrings.Add(Names.WriteMemoryCommandDescription, "Allows writing to memory directly.");
+            mStrings.Add(Names.WriteMemoryCommandPrompt, "memory-write");
+            #endregion
+
+            #region ExecuteWriteMemoryCommand
+            mStrings.Add(Names.ExecuteWriteMemoryCommandName, "[address] [data]");
+            mStrings.Add(Names.ExecuteWriteMemoryCommandDescription, "Writes data to the specified address.");
+            mStrings.Add(Names.ExecuteWriteMemoryCommandInvalidAddressMessage, "Invalid memory address. Valid addresses are within [0-{0}].");
+            mStrings.Add(Names.ExecuteWriteMemoryCommandInvalidDataMessage, "Invalid data. Valid data is within [0-{0}]");
+            #endregion
+
             #region ClockCommand
             mStrings.Add(Names.ClockCommandName, "clock");
-            mStrings.Add(Names.ClockCommandDescription, "Allows operating directly with the machine clock.");
+            mStrings.Add(Names.ClockCommandDescription, "Allows operating directly with the device's clock.");
             mStrings.Add(Names.ClockCommandPrompt, "clock");
             #endregion
 

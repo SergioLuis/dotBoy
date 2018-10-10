@@ -1,8 +1,4 @@
-﻿using System;
-
-using DotBoy.Interfaces;
-
-using ConsoleRunner.Debugging.Conditions;
+﻿using ConsoleRunner.Debugging.Conditions;
 
 namespace ConsoleRunner.Debugging.Commands
 {
@@ -19,8 +15,7 @@ namespace ConsoleRunner.Debugging.Commands
 
         internal ClockCommand()
         {
-            mSubcommands = new CommandCollection();
-            mSubcommands.AddCommand(new ClockTicksCommand());
+            mSubcommands.Add(new ClockTicksCommand());
         }
 
         internal class ClockTicksCommand : InteractiveCommand
@@ -36,8 +31,7 @@ namespace ConsoleRunner.Debugging.Commands
 
             internal ClockTicksCommand()
             {
-                mSubcommands = new CommandCollection();
-                mSubcommands.AddCommand(new ExecuteTicksCommand());
+                mSubcommands.Add(new ExecuteTicksCommand());
             }
 
             internal class ExecuteTicksCommand : FinalCommand

@@ -17,9 +17,8 @@ namespace ConsoleRunner.Debugging.Commands
 
         internal RegistersCommand()
         {
-            mSubcommands = new CommandCollection();
-            mSubcommands.AddCommand(new ReadRegisterCommand());
-            mSubcommands.AddCommand(new WriteRegisterCommand());
+            mSubcommands.Add(new ReadRegisterCommand());
+            mSubcommands.Add(new WriteRegisterCommand());
         }
 
         internal class ReadRegisterCommand : InteractiveCommand
@@ -35,10 +34,9 @@ namespace ConsoleRunner.Debugging.Commands
 
             internal ReadRegisterCommand()
             {
-                mSubcommands = new CommandCollection();
-                mSubcommands.AddCommand(new ExecuteReadOneCommand());
-                mSubcommands.AddCommand(new ExecuteReadAllCommand());
-                mSubcommands.AddCommand(new ExecuteReadFlagsCommand());
+                mSubcommands.Add(new ExecuteReadOneCommand());
+                mSubcommands.Add(new ExecuteReadAllCommand());
+                mSubcommands.Add(new ExecuteReadFlagsCommand());
             }
 
             internal class ExecuteReadOneCommand : FinalCommand
@@ -189,10 +187,9 @@ namespace ConsoleRunner.Debugging.Commands
 
             internal WriteRegisterCommand()
             {
-                mSubcommands = new CommandCollection();
-                mSubcommands.AddCommand(new ExecuteWriteOneCommand());
-                mSubcommands.AddCommand(new ExecuteWriteFlagsCommand());
-                mSubcommands.AddCommand(new ExecuteResetAllCommand());
+                mSubcommands.Add(new ExecuteWriteOneCommand());
+                mSubcommands.Add(new ExecuteWriteFlagsCommand());
+                mSubcommands.Add(new ExecuteResetAllCommand());
             }
 
             internal class ExecuteWriteOneCommand : FinalCommand

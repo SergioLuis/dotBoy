@@ -20,16 +20,14 @@ namespace ConsoleRunner.Debugging.Commands
 
         internal BreakpointsCommand()
         {
-            mSubcommands = new CommandCollection();
+            mSubcommands.Add(new ExecuteListBreakpointsCommand());
 
-            mSubcommands.AddCommand(new ExecuteListBreakpointsCommand());
+            mSubcommands.Add(new AddBreakpointCommand());
+            mSubcommands.Add(new EnableBreakpointCommand());
+            mSubcommands.Add(new DisableBreakpointCommand());
+            mSubcommands.Add(new RemoveBreakpointCommand());
 
-            mSubcommands.AddCommand(new AddBreakpointCommand());
-            mSubcommands.AddCommand(new EnableBreakpointCommand());
-            mSubcommands.AddCommand(new DisableBreakpointCommand());
-            mSubcommands.AddCommand(new RemoveBreakpointCommand());
-
-            mSubcommands.AddCommand(new ExecuteRunCommand());
+            mSubcommands.Add(new ExecuteRunCommand());
         }
 
         internal class ExecuteListBreakpointsCommand : FinalCommand
@@ -103,8 +101,7 @@ namespace ConsoleRunner.Debugging.Commands
 
             internal AddBreakpointCommand()
             {
-                mSubcommands = new CommandCollection();
-                mSubcommands.AddCommand(new AddBreakpointByRegisterValueCommand());
+                mSubcommands.Add(new AddBreakpointByRegisterValueCommand());
             }
 
             internal class AddBreakpointByRegisterValueCommand : InteractiveCommand
@@ -123,8 +120,7 @@ namespace ConsoleRunner.Debugging.Commands
 
                 internal AddBreakpointByRegisterValueCommand()
                 {
-                    mSubcommands = new CommandCollection();
-                    mSubcommands.AddCommand(new ExecuteAddByRegisterValueCommand());
+                    mSubcommands.Add(new ExecuteAddByRegisterValueCommand());
                 }
 
                 internal class ExecuteAddByRegisterValueCommand : FinalCommand
@@ -181,8 +177,7 @@ namespace ConsoleRunner.Debugging.Commands
 
             internal EnableBreakpointCommand()
             {
-                mSubcommands = new CommandCollection();
-                mSubcommands.AddCommand(new ExecuteEnableCommand());
+                mSubcommands.Add(new ExecuteEnableCommand());
             }
 
             internal class ExecuteEnableCommand : FinalCommand
@@ -240,8 +235,7 @@ namespace ConsoleRunner.Debugging.Commands
 
             internal DisableBreakpointCommand()
             {
-                mSubcommands = new CommandCollection();
-                mSubcommands.AddCommand(new ExecuteDisableCommand());
+                mSubcommands.Add(new ExecuteDisableCommand());
             }
 
             internal class ExecuteDisableCommand : FinalCommand
@@ -299,8 +293,7 @@ namespace ConsoleRunner.Debugging.Commands
 
             internal RemoveBreakpointCommand()
             {
-                mSubcommands = new CommandCollection();
-                mSubcommands.AddCommand(new ExecuteRemoveCommand());
+                mSubcommands.Add(new ExecuteRemoveCommand());
             }
 
             internal class ExecuteRemoveCommand : FinalCommand

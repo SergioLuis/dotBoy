@@ -7,7 +7,6 @@ using NLog.Targets;
 using NLog.Config;
 
 using DotBoy;
-using DotBoy.Interfaces;
 using ConsoleRunner.Debugging;
 
 namespace ConsoleRunner
@@ -18,8 +17,8 @@ namespace ConsoleRunner
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
-            CommandLine.Parser.Default.ParseArguments<Arguments>(args)
-                .WithParsed<Arguments>(parsedArgs => RunProgram(parsedArgs));
+            Parser.Default.ParseArguments<Arguments>(args)
+                .WithParsed(parsedArgs => RunProgram(parsedArgs));
         }
 
         static void RunProgram(Arguments args)

@@ -11,7 +11,8 @@ namespace DotBoy.Core
         public Cpu(
             IMemory memory,
             IRegisters registers,
-            IPipeline pipeline)
+            IPipeline pipeline,
+            bool realTime)
         {
             mMemory = memory;
             mRegisters = registers;
@@ -20,12 +21,30 @@ namespace DotBoy.Core
 
         bool IClockObserver.OnClockTick()
         {
+            return ExecuteCycle();
+        }
+
+        bool ExecuteCycle()
+        {
+            if (mCycleCount > 0)
+            {
+                mCycleCount--;
+                return true;
+            }
+
             byte instruction = mMemory[mRegisters.PC];
-            return mPipeline.DecodeAndExecute(instruction, mRegisters, mMemory);
+            bool res = mPipeline.DecodeAndExecute(
+                instruction, mRegisters, mMemory, out mCycleCount);
+
+            mCycleCount = mRealTime ? 0 : mCycleCount - 1;
+            return res;
         }
 
         readonly IMemory mMemory;
         readonly IRegisters mRegisters;
         readonly IPipeline mPipeline;
+        readonly bool mRealTime;
+
+        int mCycleCount;
     }
 }

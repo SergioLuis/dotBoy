@@ -3,26 +3,26 @@
     public interface IInstructionSet
     {
         // 8-bit Transfer and Input/Output Instructions
-        void LdRR(byte instruction, IRegisters registers);
-        void LdRN(byte instruction, IRegisters registers, IMemory memory);
-        void LdHLN(IRegisters registers, IMemory memory);
-        void LdHLiA(IRegisters registers, IMemory memory);
-        void LdHLdA(IRegisters registers, IMemory memory);
+        int LdRR(byte instruction, IRegisters registers);
+        int LdRN(byte instruction, IRegisters registers, IMemory memory);
+        int LdHLN(IRegisters registers, IMemory memory);
+        int LdHLiA(IRegisters registers, IMemory memory);
+        int LdHLdA(IRegisters registers, IMemory memory);
 
         // 16-Bit Transfer Instructions
-        void LdDdNn(byte instruction, IRegisters registers, IMemory memory);
+        int LdDdNn(byte instruction, IRegisters registers, IMemory memory);
 
         // 8-Bit Arithmetic and Logical Operation Instructions
-        void XorR(byte instruction, IRegisters registers);
-        void XorN(byte instruction, IRegisters registers, IMemory memory);
-        void XorHL(byte instruction, IRegisters registers, IMemory memory);
-        void DecR(byte instruction, IRegisters registers);
-        void DecHL(IRegisters registers, IMemory memory);
+        int XorR(byte instruction, IRegisters registers);
+        int XorN(byte instruction, IRegisters registers, IMemory memory);
+        int XorHL(byte instruction, IRegisters registers, IMemory memory);
+        int DecR(byte instruction, IRegisters registers);
+        int DecHL(IRegisters registers, IMemory memory);
 
         // Jump instructions
-        void JpNn(IRegisters registers, IMemory memory);
+        int JpNn(IRegisters registers, IMemory memory);
 
         // General-Purpose Arithmetic Operations and CPU Control Instructions
-        void Nop(IRegisters registers);
+        int Nop(IRegisters registers);
     }
 }

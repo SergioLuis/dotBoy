@@ -32,7 +32,7 @@ namespace ConsoleRunner
 
             if (args.Debug)
             {
-                Debugger.RunDebugSession(rom, args.Trace, args.CpuClockStep);
+                Debugger.RunDebugSession(rom, args.Trace, args.RealTime, args.CpuClockStep);
                 return;
             }
 
@@ -40,6 +40,7 @@ namespace ConsoleRunner
                 rom,
                 new RealTimeSleeper(),
                 args.Trace,
+                args.RealTime,
                 args.CpuClockStep);
 
             emulator.Run();
@@ -130,6 +131,12 @@ namespace ConsoleRunner
                 HelpText = "Traces all of the execution through log"
             )]
             public bool Trace { get; set; }
+
+            [Option(
+                "rt",
+                Default = true,
+                HelpText = "The emulator runs instruction in a cycle-accurate manner")]
+            public bool RealTime { get; set; }
 
             [Option(
                 'f', "failifcorrupted",

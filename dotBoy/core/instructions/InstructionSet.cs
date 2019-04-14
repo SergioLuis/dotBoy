@@ -18,14 +18,17 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 1
         /// </summary>
-        public void LdRR(byte instruction, IRegisters registers)
+        public int LdRR(byte instruction, IRegisters registers)
         {
+#warning Untested method
             int rSrc = instruction & 0b111;
             int rDst = instruction >> 3 & 0b111;
 
             registers.Copy(rSrc, rDst);
 
             registers.PC++;
+
+            return InstructionCycles.LdRR;
         }
 
         /// <summary>
@@ -37,13 +40,16 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 2
         /// </summary>
-        public void LdRN(byte instruction, IRegisters registers, IMemory memory)
+        public int LdRN(byte instruction, IRegisters registers, IMemory memory)
         {
+#warning Untested method
             int rDst = instruction >> 3 & 0b111;
 
             registers.Write(rDst, memory[++registers.PC]);
 
             registers.PC++;
+
+            return InstructionCycles.LdRN;
         }
 
         /// <summary>
@@ -56,11 +62,14 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 3
         /// </summary>
-        public void LdHLN(IRegisters registers, IMemory memory)
+        public int LdHLN(IRegisters registers, IMemory memory)
         {
+#warning Untested method
             memory[registers.HL] = memory[++registers.PC];
 
             registers.PC++;
+
+            return InstructionCycles.LdHLN;
         }
 
         /// <summary>
@@ -73,11 +82,14 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 2
         /// </summary>
-        public void LdHLiA(IRegisters registers, IMemory memory)
+        public int LdHLiA(IRegisters registers, IMemory memory)
         {
+#warning Untested method
             memory[registers.HL++] = registers.A;
 
             registers.PC++;
+
+            return InstructionCycles.LdHLiA;
         }
 
         /// <summary>
@@ -90,11 +102,14 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 2
         /// </summary>
-        public void LdHLdA(IRegisters registers, IMemory memory)
+        public int LdHLdA(IRegisters registers, IMemory memory)
         {
+#warning Untested method
             memory[registers.HL--] = registers.A;
 
             registers.PC++;
+
+            return InstructionCycles.LdHLdA;
         }
         #endregion
 
@@ -114,8 +129,9 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 3
         /// </summary>
-        public void LdDdNn(byte instruction, IRegisters registers, IMemory memory)
+        public int LdDdNn(byte instruction, IRegisters registers, IMemory memory)
         {
+#warning Untested method
             byte lAddr = memory[++registers.PC];
             byte hAddr = memory[++registers.PC];
 
@@ -144,6 +160,8 @@ namespace DotBoy.Core.Instructions
             }
 
             registers.PC++;
+
+            return InstructionCycles.LdDdNn;
         }
         #endregion
 
@@ -162,8 +180,9 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 1
         /// </summary>
-        public void XorR(byte instruction, IRegisters registers)
+        public int XorR(byte instruction, IRegisters registers)
         {
+#warning Untested method
             int r = instruction & 0b111;
 
             byte result = (byte)(registers.A ^ registers.Read(r));
@@ -176,6 +195,8 @@ namespace DotBoy.Core.Instructions
             registers.FlagZ = result == 0;
 
             registers.PC++;
+
+            return InstructionCycles.XorR;
         }
 
         /// <summary>
@@ -193,8 +214,9 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 2
         /// </summary>
-        public void XorN(byte instruction, IRegisters registers, IMemory memory)
+        public int XorN(byte instruction, IRegisters registers, IMemory memory)
         {
+#warning Untested method
             byte result = (byte)(registers.A ^ memory[++registers.PC]);
 
             registers.A = result;
@@ -205,6 +227,8 @@ namespace DotBoy.Core.Instructions
             registers.FlagZ = result == 0;
 
             registers.PC++;
+
+            return InstructionCycles.XorN;
         }
 
         /// <summary>
@@ -222,8 +246,9 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 2
         /// </summary>
-        public void XorHL(byte instruction, IRegisters registers, IMemory memory)
+        public int XorHL(byte instruction, IRegisters registers, IMemory memory)
         {
+#warning Untested method
             ushort address = memory[registers.HL];
             byte result = (byte)(registers.A ^ memory[address]);
 
@@ -235,6 +260,8 @@ namespace DotBoy.Core.Instructions
             registers.FlagZ = result == 0;
 
             registers.PC++;
+
+            return InstructionCycles.XorHL;
         }
 
         /// <summary>
@@ -250,8 +277,9 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 1
         /// </summary>
-        public void DecR(byte instruction, IRegisters registers)
+        public int DecR(byte instruction, IRegisters registers)
         {
+#warning Untested method
             int r = instruction >> 3 & 0b111;
 
             byte oldValue = registers.Read(r);
@@ -264,6 +292,8 @@ namespace DotBoy.Core.Instructions
             registers.FlagZ = newValue == 0;
 
             registers.PC++;
+
+            return InstructionCycles.DecR;
         }
 
         /// <summary>
@@ -279,8 +309,9 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 3
         /// </summary>
-        public void DecHL(IRegisters registers, IMemory memory)
+        public int DecHL(IRegisters registers, IMemory memory)
         {
+#warning Untested method
             ushort address = registers.HL;
 
             byte oldValue = memory[address];
@@ -293,6 +324,8 @@ namespace DotBoy.Core.Instructions
             registers.FlagZ = newValue == 0;
 
             registers.PC++;
+
+            return InstructionCycles.DecHL;
         }
         #endregion
 
@@ -307,12 +340,15 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Affected flags: None
         /// </summary>
-        public void JpNn(IRegisters registers, IMemory memory)
+        public int JpNn(IRegisters registers, IMemory memory)
         {
+#warning Untested method
             byte lAddr = memory[(ushort)(++registers.PC)];
             byte hAddr = memory[(ushort)(++registers.PC)];
 
             registers.PC = (ushort)(hAddr << 8 | lAddr);
+
+            return InstructionCycles.JpNn;
         }
         #endregion
 
@@ -327,10 +363,13 @@ namespace DotBoy.Core.Instructions
         /// 
         /// Cycles: 1
         /// </summary>
-        public void Nop(IRegisters registers)
+        public int Nop(IRegisters registers)
         {
+#warning Untested method
 #warning Not checking if interruptions are disabled
             registers.PC++;
+
+            return InstructionCycles.Nop;
         }
         #endregion
     }

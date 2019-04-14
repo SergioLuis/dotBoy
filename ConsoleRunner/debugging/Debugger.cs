@@ -7,12 +7,14 @@ namespace ConsoleRunner.Debugging
 {
     internal static class Debugger
     {
-        internal static void RunDebugSession(Rom rom, bool trace, long cpuClockStep)
+        internal static void RunDebugSession(
+            Rom rom, bool trace, bool realTime, long cpuClockStep)
         {
             var emulator = Emulator.InitForInteractiveDebugging(
                 rom,
                 new RealTimeSleeper(),
                 trace,
+                realTime,
                 cpuClockStep,
                 out IClock clock,
                 out IChronometer chronometer,

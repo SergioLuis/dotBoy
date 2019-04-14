@@ -15,14 +15,18 @@ namespace DotBoy.Core
         }
 
         bool IPipeline.DecodeAndExecute(
-            byte instruction, IRegisters registers, IMemory memory)
+            byte instruction,
+            IRegisters registers,
+            IMemory memory,
+            out int consumedCycles)
         {
             bool succeeded = true;
             switch (instruction)
             {
                 case 0x00:
-                    mInstructionSet.Nop(registers);
-                    break; ;
+                    consumedCycles =
+                        mInstructionSet.Nop(registers);
+                    break;
 
                 #region 8-bit Transfer and Input/Output Instructions
                 case 0x7F:
@@ -74,7 +78,8 @@ namespace DotBoy.Core
                 case 0x6B:
                 case 0x6C:
                 case 0x6D:
-                    mInstructionSet.LdRR(instruction, registers);
+                    consumedCycles =
+                        mInstructionSet.LdRR(instruction, registers);
                     break;
 
                 case 0x3E:
@@ -84,19 +89,23 @@ namespace DotBoy.Core
                 case 0x1E:
                 case 0x26:
                 case 0x2E:
-                    mInstructionSet.LdRN(instruction, registers, memory);
+                    consumedCycles =
+                        mInstructionSet.LdRN(instruction, registers, memory);
                     break;
 
                 case 0x36:
-                    mInstructionSet.LdHLN(registers, memory);
+                    consumedCycles =
+                        mInstructionSet.LdHLN(registers, memory);
                     break;
 
                 case 0x22:
-                    mInstructionSet.LdHLiA(registers, memory);
+                    consumedCycles =
+                        mInstructionSet.LdHLiA(registers, memory);
                     break;
 
                 case 0x32:
-                    mInstructionSet.LdHLdA(registers, memory);
+                    consumedCycles =
+                        mInstructionSet.LdHLdA(registers, memory);
                     break;
                 #endregion
 
@@ -105,13 +114,14 @@ namespace DotBoy.Core
                 case 0x11:
                 case 0x21:
                 case 0x31:
-                    mInstructionSet.LdDdNn(instruction, registers, memory);
+                    consumedCycles =
+                        mInstructionSet.LdDdNn(instruction, registers, memory);
                     break;
                 #endregion
 
                 #region  Jump instructions
                 case 0xC3:
-                    mInstructionSet.JpNn(registers, memory);
+                    consumedCycles = mInstructionSet.JpNn(registers, memory);
                     break;
                 #endregion
 
@@ -123,15 +133,18 @@ namespace DotBoy.Core
                 case 0xAB:
                 case 0xAC:
                 case 0xAD:
-                    mInstructionSet.XorR(instruction, registers);
+                    consumedCycles =
+                        mInstructionSet.XorR(instruction, registers);
                     break;
 
                 case 0xDE:
-                    mInstructionSet.XorN(instruction, registers, memory);
+                    consumedCycles =
+                        mInstructionSet.XorN(instruction, registers, memory);
                     break;
 
                 case 0xAE:
-                    mInstructionSet.XorHL(instruction, registers, memory);
+                    consumedCycles =
+                        mInstructionSet.XorHL(instruction, registers, memory);
                     break;
 
                 case 0x3D:
@@ -141,17 +154,20 @@ namespace DotBoy.Core
                 case 0x1D:
                 case 0x25:
                 case 0x2D:
-                    mInstructionSet.DecR(instruction, registers);
+                    consumedCycles =
+                        mInstructionSet.DecR(instruction, registers);
                     break;
 
                 case 0x35:
-                    mInstructionSet.DecHL(registers, memory);
+                    consumedCycles =
+                        mInstructionSet.DecHL(registers, memory);
                     break;
                 #endregion
 
                 default:
                     HaltAndCatchFire(instruction);
                     succeeded = false;
+                    consumedCycles = 1;
                     break;
             }
 

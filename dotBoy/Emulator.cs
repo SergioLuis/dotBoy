@@ -13,10 +13,11 @@ namespace DotBoy
             Rom rom,
             ISleeper sleeper,
             bool trace = true,
+            bool realTime = true,
             long cpuClockStep = 0)
         {
             return InitForInteractiveDebugging(
-                rom, sleeper, trace, cpuClockStep,
+                rom, sleeper, trace, realTime, cpuClockStep,
                 out _, out _, out _, out _, out _, out _, out _, out _);
         }
 
@@ -24,6 +25,7 @@ namespace DotBoy
             Rom rom,
             ISleeper sleeper,
             bool trace,
+            bool realTime,
             long cpuClockStep,
             out IClock clock,
             out IChronometer chronometer,
@@ -68,7 +70,7 @@ namespace DotBoy
 
             registers.PC = 0x0100;
 
-            cpuClockObserver = new Cpu(memory, registers, pipeline);
+            cpuClockObserver = new Cpu(memory, registers, pipeline, realTime);
             clockDivider.AddObserver(trace ? new LoggedCpu(cpuClockObserver) : cpuClockObserver);
 
             return new Emulator(sleeper, chronometer, clockDivider);

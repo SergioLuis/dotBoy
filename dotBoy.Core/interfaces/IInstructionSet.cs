@@ -21,6 +21,7 @@
 
         // Jump instructions
         int JpNn(IRegisters registers, IMemory memory);
+        int JrCcE(byte instruction, IRegisters registers, IMemory memory);
 
         // General-Purpose Arithmetic Operations and CPU Control Instructions
         int Nop(IRegisters registers);

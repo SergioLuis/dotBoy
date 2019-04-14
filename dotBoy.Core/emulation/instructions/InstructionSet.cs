@@ -352,6 +352,64 @@ namespace DotBoy.Core.Emulation.Instructions
 
             return InstructionCycles.JpNn;
         }
+
+        /// <summary>
+        /// JR cc, e | if cc true, PC <- PC + e
+        /// 
+        /// If condition cc and the flag status match, jumps -127 to +129 steps
+        /// from the current address. If cc and the flag status do not match,
+        /// the instruction following the current JP instruction is executed.
+        /// 
+        /// Affected flags: None
+        /// 
+        /// Cycles 2 (if cc false), 3 (if cc true).
+        /// </summary>
+        /// <param name="registers"></param>
+        /// <param name="memory"></param>
+        /// <returns></returns>
+        public int JrCcE(byte instruction, IRegisters registers, IMemory memory)
+        {
+            sbyte e = (sbyte)memory[(ushort)(++registers.PC)];
+
+            int cc = instruction >> 3 & 0b00000011;
+
+            if (!JpCondition(cc, registers))
+            {
+                registers.PC++;
+                return 2;
+            }
+
+            short signedE = (short)(e + 1);
+            ushort unsignedE = (ushort)Math.Abs(signedE);
+
+            if (signedE > 0)
+                registers.PC += unsignedE;
+            else
+                registers.PC -= unsignedE;
+
+            return 3;
+        }
+
+        static bool JpCondition(int condition, IRegisters registers)
+        {
+            switch (condition)
+            {
+                case 0b00: // Not Z
+                    return !registers.FlagZ;
+
+                case 0b01: // Z
+                    return registers.FlagZ;
+
+                case 0b10: // Not C
+                    return !registers.FlagCY;
+
+                case 0b11: // C
+                    return registers.FlagCY;
+            }
+
+            throw new InvalidOperationException(
+                $"Invalid jump condition {condition}");
+        }
         #endregion
 
         #region General-Purpose Arithmetic Operations and CPU Control Instructions

@@ -59,6 +59,12 @@ namespace DotBoy.Core.Emulation.Logging
             mLog.Trace("JP nn");
             return mInstructionSet.JpNn(registers, memory);
         }
+
+        int IInstructionSet.JrCcE(byte instruction, IRegisters registers, IMemory memory)
+        {
+            mLog.Trace("JR cc, e");
+            return mInstructionSet.JrCcE(instruction, registers, memory);
+        }
         #endregion
 
         #region 8-Bit Arithmetic and Logical Operation Instructions

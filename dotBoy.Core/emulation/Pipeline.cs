@@ -121,7 +121,16 @@ namespace DotBoy.Core.Emulation
 
                 #region  Jump instructions
                 case 0xC3:
-                    consumedCycles = mInstructionSet.JpNn(registers, memory);
+                    consumedCycles =
+                        mInstructionSet.JpNn(registers, memory);
+                    break;
+
+                case 0x20:
+                case 0x28:
+                case 0x30:
+                case 0x38:
+                    consumedCycles =
+                        mInstructionSet.JrCcE(instruction, registers, memory);
                     break;
                 #endregion
 

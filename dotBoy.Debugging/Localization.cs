@@ -147,7 +147,7 @@ namespace DotBoy.Debugging
             catch (Exception ex)
             {
                 Console.Error.WriteLine(
-                    $"There was an error initializing logging: ${ex.Message}");
+                    $"There was an error initializing localization: {ex.Message}");
                 Console.Error.WriteLine(
                     $"StackTrace:{Environment.NewLine}{ex.StackTrace}");
             }
@@ -160,12 +160,12 @@ namespace DotBoy.Debugging
                 case Language.English:
                     InitializeEnglish();
                     mbInitialized = true;
-                    break;
+                    return;
 
                 case Language.Spanish:
                     InitializeSpanish();
                     mbInitialized = true;
-                    break;
+                    return;
             }
 
             throw new Exception($"Unknown language: {language}");

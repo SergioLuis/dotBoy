@@ -339,6 +339,8 @@ namespace DotBoy.Core.Emulation.Instructions
         /// higher-order byte is placed in byte 3.
         /// 
         /// Affected flags: None
+        /// 
+        /// Cycles: 4
         /// </summary>
         public int JpNn(IRegisters registers, IMemory memory)
         {

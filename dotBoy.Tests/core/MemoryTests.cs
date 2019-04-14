@@ -2,8 +2,8 @@
 
 using Xunit;
 
-using DotBoy.Core;
-using DotBoy.Interfaces;
+using DotBoy.Core.Emulation;
+using DotBoy.Core.Interfaces;
 
 namespace DotBoy.Tests.Core
 {

@@ -1,6 +1,6 @@
 using Xunit;
 
-using DotBoy.Utils;
+using DotBoy.Core.Utils;
 
 namespace DotBoy.Tests
 {

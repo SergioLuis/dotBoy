@@ -165,7 +165,7 @@ namespace DotBoy.Core.Emulation
                 #endregion
 
                 default:
-                    HaltAndCatchFire(instruction);
+                    HaltAndCatchFire(instruction, registers.PC);
                     succeeded = false;
                     consumedCycles = 1;
                     break;
@@ -174,9 +174,23 @@ namespace DotBoy.Core.Emulation
             return succeeded;
         }
 
-        void HaltAndCatchFire(byte instruction)
+        void HaltAndCatchFire(byte instruction, ushort programCounter)
         {
-            mLog.Error("Instruction not implemented.");
+            string messageFormat =
+                $"Instruction not implemented.{Environment.NewLine}" +
+                $"    Instruction: {{0,6}} / {{1,4}} / {{2,16}}{Environment.NewLine}" +
+                $"        Address: {{3,6}} / {{4,4}} / {{5,16}}{Environment.NewLine}";
+
+            string message = string.Format(
+                messageFormat,
+                string.Format("0x{0:X2}", instruction),
+                instruction,
+                Convert.ToString(instruction, 2).PadLeft(8, '0'),
+                string.Format("0x{0:X4}", programCounter),
+                programCounter,
+                Convert.ToString(instruction, 2).PadLeft(16, '0'));
+
+            mLog.Error(message);
         }
 
         readonly IInstructionSet mInstructionSet;
